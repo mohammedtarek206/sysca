@@ -28,14 +28,14 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api/courses', require('./routes/courses'));
-app.use('/api/payments', require('./routes/payments'));
-app.use('/api/attendance', require('./routes/attendance'));
-app.use('/api/stats', require('./routes/stats'));
-app.use('/api/halls', require('./routes/halls'));
-app.use('/api/reports', require('./routes/reports'));
+app.use('/api/auth', require('../server/routes/auth'));
+app.use('/api/users', require('../server/routes/users'));
+app.use('/api/courses', require('../server/routes/courses'));
+app.use('/api/payments', require('../server/routes/payments'));
+app.use('/api/attendance', require('../server/routes/attendance'));
+app.use('/api/stats', require('../server/routes/stats'));
+app.use('/api/halls', require('../server/routes/halls'));
+app.use('/api/reports', require('../server/routes/reports'));
 
 // Root route for health check
 app.get('/', (req, res) => {
