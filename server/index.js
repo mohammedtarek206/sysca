@@ -37,6 +37,11 @@ app.use('/api/stats', require('./routes/stats'));
 app.use('/api/halls', require('./routes/halls'));
 app.use('/api/reports', require('./routes/reports'));
 
+// Root route for health check
+app.get('/', (req, res) => {
+  res.send('Academy API is running properly...');
+});
+
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/academy_db';
 
