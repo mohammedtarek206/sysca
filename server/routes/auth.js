@@ -25,20 +25,43 @@ router.post('/register', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res) => {
+  console.log('Login request received for:', req.body.email);
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+       console.log('Login error: Missing email or password');
+       return res.status(400).json({ message: 'Email and password are required' });
+    }
+
+    console.log('Searching for user...');
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!user) {
+       console.log('Login error: User not found');
+       return res.status(400).json({ message: 'Invalid credentials (U)' });
+    }
 
+    console.log('User found, comparing password...');
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!isMatch) {
+       console.log('Login error: Password mismatch');
+       return res.status(400).json({ message: 'Invalid credentials (P)' });
+    }
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'secret', { expiresIn: '1d' });
+    console.log('Password match, generating token...');
+    const token = jwt.sign(
+      { id: user._id, role: user.role }, 
+      process.env.JWT_SECRET || 'secret', 
+      { expiresIn: '1d' }
+    );
+    
+    console.log('Login successful!');
     res.json({ token, user: { id: user._id, name: user.name, role: user.role } });
   } catch (err) {
-    console.error('Login Error:', err);
-    // Returning the real error message temporarily for production debugging
-    res.status(500).json({ message: 'Detailed Error: ' + err.message, error: err.stack });
+    console.error('CRITICAL LOGIN ERROR:', err);
+    res.status(500).json({ 
+      message: 'Login Crash: ' + err.message, 
+      stack: process.env.NODE_ENV === 'production' ? null : err.stack 
+    });
   }
 });
 
