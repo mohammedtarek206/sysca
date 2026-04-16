@@ -18,7 +18,8 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'secret', { expiresIn: '1d' });
     res.json({ token, user: { id: user._id, name: user.name, role: user.role } });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Registration Error:', err);
+    res.status(500).json({ message: 'Internal Server Error', error: err.message });
   }
 });
 
@@ -35,7 +36,8 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'secret', { expiresIn: '1d' });
     res.json({ token, user: { id: user._id, name: user.name, role: user.role } });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Login Error:', err);
+    res.status(500).json({ message: 'Internal Server Error', error: err.message });
   }
 });
 

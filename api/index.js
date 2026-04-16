@@ -38,6 +38,45 @@ app.use('/api/halls', require('../server/routes/halls'));
 app.use('/api/reports', require('../server/routes/reports'));
 
 // Root route for health check
+app.get('/api/health', (req, res) => {
+  const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
+  res.json({
+    status: 'Server is running',
+    database: dbStatus,
+    timestamp: new Date().toISOString(),
+    env: {
+      hasMongoUri: !!process.env.MONGO_URI,
+      nodeEnv: process.env.NODE_ENV
+    }
+  });
+});
+
+// One-time Database Initialization (Seeding)
+app.get('/api/init-db', async (req, res) => {
+  try {
+    const User = require('../server/models/User');
+    const email = 'admin@academy.com';
+    
+    let admin = await User.findOne({ email });
+    if (admin) {
+      return res.json({ message: 'Admin user already exists.' });
+    }
+
+    admin = new User({
+      name: 'المدير العام',
+      email: email,
+      phone: '01012345678',
+      password: 'admin123',
+      role: 'admin'
+    });
+    
+    await admin.save();
+    res.json({ message: 'Admin user created successfully!', email: admin.email });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/', (req, res) => {
   res.send('Academy API is running properly...');
 });
