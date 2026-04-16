@@ -1,0 +1,376 @@
+{
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "students": "الطلاب",
+    "teachers": "المدرسين",
+    "courses": "الكورسات",
+    "halls": "القاعات",
+    "payments": "المدفوعات",
+    "reports": "التقارير المالية",
+    "attendance": "الحضور والغياب",
+    "statement": "كشف الحساب",
+    "profile": "الملف الشخصي"
+  },
+  "auth": {
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "search": "بحث...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "add": "إضافة",
+    "actions": "الإجراءات",
+    "currency": "ج.م"
+  },
+  "dashboard": {
+    "totalStudents": "إجمالي الطلاب",
+    "totalInstructors": "إجمالي المدرسين",
+    "activeCourses": "الكورسات النشطة",
+    "totalRevenue": "إجمالي الإيرادات",
+    "subscriptionsGrowth": "نمو الاشتراكات",
+    "chartsComingSoon": "سيتم عرض الرسوم البيانية التفاعلية هنا قريباً.",
+    "quickLinks": "الروابط السريعة",
+    "viewProfitReport": "عرض تقرير الأرباح",
+    "manageHalls": "إدارة القاعات",
+    "myEnrolledCourses": "كورساتي المسجلة",
+    "totalFees": "إجمالي الرسوم",
+    "payments": "المدفوعات",
+    "remainingBalance": "المتبقي للتحصيل",
+    "myCurrentCourses": "كورساتي الحالية",
+    "notEnrolled": "أنت غير مسجل في أي كورس حالياً.",
+    "statement": "كشف الحساب",
+    "downloadStatementDesc": "يمكنك تحميل وعرض كشف حسابك التفصيلي من هنا.",
+    "viewStatementBtn": "عرض كشف الحساب",
+    "coursesITeach": "الكورسات التي أدرسها",
+    "fixedSalary": "الراتب الثابت",
+    "totalCommissions": "إجمالي العمولات",
+    "netDue": "صافي المستحقات",
+    "courseStudentStats": "إحصائيات الكورسات والطلاب",
+    "students": "الطلاب:",
+    "commissionDue": "العمولة المستحقة:",
+    "enrolledStudentsLabel": "الطلاب المسجلين:",
+    "noStudentsYet": "لا يوجد طلاب مسجلين حتى الآن.",
+    "noCoursesYet": "لا توجد كورسات مسجلة حالياً.",
+    "welcome": "مرحباً، {{name}}",
+    "adminDesc": "إليك نظرة سريعة على أداء الأكاديمية اليوم.",
+    "studentDesc": "إليك ملخص لمسيرتك التعليمية والمالية اليوم.",
+    "instructorDesc": "إليك نظرة سريعة على فصولك التعليمية ومستحقاتك اليوم."
+  },
+  "teachers": {
+    "title": "إدارة المدرسين",
+    "subtitle": "قائمة بأعضاء هيئة التدريس والمدربين",
+    "addNew": "إضافة مدرس جديد",
+    "searchPlaceholder": "بحث بالاسم أو رقم الهاتف...",
+    "table": {
+      "name": "الاسم",
+      "contactInfo": "بيانات الاتصال",
+      "salaryCommission": "الراتب / العمولة",
+      "courses": "الكورسات"
+    },
+    "empty": "لا يوجد مدرسين حالياً",
+    "courseCount": "{{count}} كورس",
+    "salaryValue": "{{value}} ج.م",
+    "commissionValue": "{{value}}% عمولة",
+    "actions": {
+      "statement": "كشف حساب",
+      "confirmDelete": "هل أنت متأكد من حذف هذا المدرس؟"
+    },
+    "modal": {
+      "editTitle": "تعديل بيانات مدرس",
+      "addTitle": "إضافة مدرس جديد",
+      "labels": {
+        "fullName": "الاسم بالكامل",
+        "phone": "رقم الهاتف",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور",
+        "salary": "الراتب الشهري (ج.م)",
+        "commission": "نسبة العمولة (%)",
+        "assignedCourses": "الكورسات المسؤولة عنها"
+      },
+      "placeholders": {
+        "name": "مثال: د. أحمد علي",
+        "phone": "01XXXXXXXXX",
+        "email": "teacher@academy.com",
+        "password": "********",
+        "salary": "5000",
+        "commission": "10"
+      },
+      "emptyCourses": "لا توجد كورسات مسجلة حالياً",
+      "updateBtn": "تحديث البيانات",
+      "saveBtn": "حفظ البيانات"
+    }
+  },
+  "students": {
+    "title": "إدارة الطلاب",
+    "subtitle": "قائمة بجميع الطلاب المسجلين في الأكاديمية",
+    "addNew": "إضافة طالب جديد",
+    "searchPlaceholder": "بحث بالاسم أو رقم الهاتف...",
+    "table": {
+      "name": "الاسم",
+      "contactInfo": "بيانات الاتصال",
+      "registrationDate": "تاريخ التسجيل",
+      "actions": "الإجراءات"
+    },
+    "empty": "لا يوجد طلاب حالياً",
+    "courseCount": "{{count}} كورس",
+    "actions": {
+      "statement": "كشف حساب",
+      "confirmDelete": "هل أنت متأكد من حذف هذا الطالب؟"
+    },
+    "modal": {
+      "editTitle": "تعديل بيانات طالب",
+      "addTitle": "إضافة طالب جديد",
+      "labels": {
+        "fullName": "الاسم بالكامل",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الهاتف",
+        "password": "كلمة المرور"
+      },
+      "placeholders": {
+        "name": "مثال: محمد علي",
+        "email": "example@mail.com",
+        "phone": "010XXXXXXXX",
+        "password": "********"
+      },
+      "updateBtn": "تحديث البيانات",
+      "saveBtn": "حفظ البيانات"
+    },
+    "enrollModal": {
+      "title": "تسجيل الكورسات لـ {{name}}",
+      "saveBtn": "حفظ التسجيلات"
+    }
+  },
+  "courses": {
+    "title": "إدارة الكورسات",
+    "subtitle": "إدارة المناهج والبرامج التدريبية المتاحة",
+    "addNew": "إنشاء كورس جديد",
+    "empty": "لا توجد كورسات حالياً",
+    "alerts": {
+      "updated": "تم تحديث الكورس بنجاح",
+      "created": "تم إنشاء الكورس بنجاح",
+      "confirmDelete": "هل أنت متأكد من حذف هذا الكورس؟"
+    },
+    "card": {
+      "instructors": "المحاضرون: ",
+      "notAssigned": "غير محدد",
+      "hall": "القاعة: ",
+      "hallNotAssigned": "غير محددة",
+      "duration": "المدة: ",
+      "price": "السعر: ",
+      "viewDetails": "عرض التفاصيل"
+    },
+    "modal": {
+      "editTitle": "تعديل الكورس",
+      "addTitle": "إنشاء كورس جديد",
+      "labels": {
+        "courseName": "اسم الكورس",
+        "price": "السعر (ج.م)",
+        "duration": "المدة",
+        "hall": "القاعة",
+        "instructors": "المحاضرون المسؤولون"
+      },
+      "placeholders": {
+        "name": "مثال: دبلومة البرمجة",
+        "price": "1500",
+        "duration": "مثال: 3 شهور",
+        "chooseHall": "اختر قاعة..."
+      },
+      "hallCapacity": "سعة {{capacity}}",
+      "noInstructors": "لا يوجد مدرسين مسجلين حالياً",
+      "updateBtn": "تحديث الكورس",
+      "saveBtn": "إنشاء الكورس"
+    },
+    "detailsModal": {
+      "title": "تفاصيل البرنامج التدريبي",
+      "courseCode": "كود البرنامج: ",
+      "financialCost": "التكلفة المالية",
+      "duration": "المدة الزمنية",
+      "hallAndLocation": "القاعة والمكان",
+      "hallNotAssigned": "لم يتم تحديد القاعة بعد",
+      "instructors": "المحاضرون والمدربون",
+      "noInstructors": "لم يتم تعيين محاضرين",
+      "closeBtn": "إغلاق"
+    }
+  },
+  "halls": {
+    "title": "إدارة القاعات والفصول",
+    "subtitle": "تهيئة أماكن التدريب والمحاضرات في الأكاديمية",
+    "addNew": "إضافة قاعة جديدة",
+    "searchPlaceholder": "بحث باسم القاعة...",
+    "empty": "لا توجد قاعات حالياً.",
+    "alerts": {
+      "confirmDelete": "هل أنت متأكد من حذف هذه القاعة؟"
+    },
+    "card": {
+      "capacity": "السعة: {{capacity}} طالب",
+      "noDescription": "لا يوجد وصف متاح لهذه القاعة."
+    },
+    "modal": {
+      "editTitle": "تعديل بيانات قاعة",
+      "addTitle": "إضافة قاعة جديدة",
+      "labels": {
+        "name": "اسم القاعة / الفصل",
+        "capacity": "السعة القصوى (عدد الطلاب)",
+        "description": "وصف إضافي أو ملاحظات"
+      },
+      "placeholders": {
+        "name": "مثال: قاعة 101 - الدور الأول",
+        "capacity": "30",
+        "description": "اكتب هنا أي ملاحظات حول تجهيزات القاعة (بروجيكتور، تكييف، إلخ)..."
+      },
+      "updateBtn": "تحديث البيانات",
+      "saveBtn": "حفظ بيانات القاعة"
+    }
+  },
+  "payments": {
+    "title": "النظام المالي",
+    "subtitle": "إدارة المدفوعات ومتابعة المتأخرات",
+    "addNew": "تسجيل دفعة جديدة",
+    "searchPlaceholder": "بحث بأسماء الطلاب...",
+    "tabs": {
+      "all": "كل المدفوعات",
+      "late": "المدفوعات المتأخرة"
+    },
+    "alerts": {
+      "confirmDelete": "هل أنت متأكد من حذف هذا السجل؟"
+    },
+    "allTable": {
+      "student": "الطالب",
+      "course": "الكورس",
+      "amount": "المبلغ",
+      "date": "التاريخ",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "empty": "لا توجد سجلات مالية حالياً",
+      "generalCourse": "عام",
+      "paid": "مدفوع",
+      "pending": "معلق"
+    },
+    "lateTable": {
+      "student": "الطالب",
+      "totalRequired": "إجمالي الرسوم",
+      "totalPaid": "إجمالي المدفوع",
+      "balance": "المبلغ المتبقي",
+      "actions": "الإجراءات",
+      "empty": "لا توجد دفعات متأخرة حالياً",
+      "collectBtn": "تحصيل دفعة"
+    },
+    "modal": {
+      "title": "تسجيل دفعة جديدة",
+      "labels": {
+        "student": "الطالب",
+        "course": "الكورس المرتبط (اختياري)",
+        "amount": "المبلغ (ج.م)",
+        "status": "الحالة",
+        "note": "ملاحظات"
+      },
+      "placeholders": {
+        "chooseStudent": "اختر طالباً...",
+        "generalPayment": "دفعة عامة (بدون كورس)",
+        "amount": "0.00",
+        "note": "مثال: قسط كورس البرمجة"
+      },
+      "statusPaid": "مدفوع",
+      "statusPending": "معلق",
+      "saveBtn": "تسجيل العملية"
+    }
+  },
+  "statement": {
+    "loading": "جاري تحميل كشف الحساب...",
+    "error": "حدث خطأ في تحميل البيانات.",
+    "back": "العودة",
+    "print": "طباعة الكشف",
+    "title": "كشف حساب تفصيلي",
+    "descStudent": "بيان بالمدفوعات والكورسات المسجلة للطلاب",
+    "descTeacher": "بيان بالرواتب والعمولات المستحقة للمدرس",
+    "academyName": "أكاديمية التعليم المتطور",
+    "extractDate": "تاريخ الاستخراج",
+    "profileData": "بيانات الطرف الآخر",
+    "phone": "الهاتف",
+    "email": "البريد",
+    "balanceSummary": "ملخص الرصيد",
+    "totalFees": "إجمالي الرسوم",
+    "totalPaid": "إجمالي المدفوع",
+    "remainingDebt": "المتبقي (المديونية)",
+    "fixedSalary": "الراتب الثابت",
+    "totalCommissions": "إجمالي العمولات",
+    "netEarnings": "صافي المستحقات",
+    "paymentHistory": "سجل المدفوعات",
+    "paymentTable": {
+      "date": "التاريخ",
+      "note": "البيان / الملاحظات",
+      "amount": "المبلغ",
+      "status": "الحالة",
+      "empty": "لا توجد مدفوعات مسجلة",
+      "cashPayment": "دفعة نقدية",
+      "paid": "تم الدفع",
+      "pending": "معلق"
+    },
+    "registeredCourses": "الكورسات المسجلة",
+    "commissionDetails": "تفاصيل العمولات لكل كورس",
+    "commissionTable": {
+      "course": "الكورس",
+      "studentsCount": "عدد الطلاب",
+      "coursePrice": "سعر الكورس",
+      "earnedCommission": "العمولة المستحقة",
+      "studentWord": "طالب"
+    }
+  },
+  "reports": {
+    "loading": "جاري تحميل التقارير...",
+    "error": "حدث خطأ في تحميل البيانات.",
+    "title": "التقارير المالية",
+    "subtitle": "نظرة شاملة على الأرباح، النفقات، والعائد الاستثماري",
+    "totalIncome": "إجمالي الإيرادات",
+    "totalExpenses": "إجمالي المصروفات (رواتب + عمولات)",
+    "netProfit": "صافي الأرباح",
+    "expensesDetails": "تفاصيل المصروفات المباشرة",
+    "fixedSalaries": "رواتب المدرسين الثابتة",
+    "commissionsDue": "إجمالي العمولات المستحقة",
+    "total": "الإجمالي",
+    "financialPerformance": "مؤشر الأداء المالي",
+    "performanceDesc1": "نسبة الربح الصافي إلى الإيرادات هي",
+    "performanceDesc2": "نظامك المالي مستقر حالياً."
+  },
+  "attendance": {
+    "title": "الحضور والغياب",
+    "subtitle": "تسجيل ومتابعة حضور الطلاب في الكورسات المختلفة",
+    "addNew": "تسجيل حضور جديد",
+    "searchPlaceholder": "بحث بالاسم أو الكورس...",
+    "alerts": {
+      "error": "حدث خطأ في تسجيل الحضور"
+    },
+    "status": {
+      "present": "حاضر",
+      "absent": "غائب",
+      "late": "متأخر"
+    },
+    "table": {
+      "student": "الطالب",
+      "course": "الكورس",
+      "date": "التاريخ",
+      "status": "الحالة",
+      "empty": "لا توجد سجلات حضور حالياً"
+    },
+    "modal": {
+      "title": "تسجيل حضور جديد",
+      "labels": {
+        "course": "اختر الكورس",
+        "student": "اختر الطالب",
+        "date": "التاريخ",
+        "status": "الحالة"
+      },
+      "placeholders": {
+        "chooseCourse": "اختر الكورس...",
+        "chooseStudent": "اختر طالباً..."
+      },
+      "saveBtn": "تسجيل الحضور"
+    }
+  }
+}
