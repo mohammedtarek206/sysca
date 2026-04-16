@@ -33,7 +33,7 @@ const Teachers = () => {
 
   const fetchTeachers = async () => {
     try {
-      const res = await api.get('/api/users?role=instructor');
+      const res = await api.get('/users?role=instructor');
       setTeachers(res.data);
       setLoading(false);
     } catch (err) {
@@ -44,7 +44,7 @@ const Teachers = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await api.get('/api/courses');
+      const res = await api.get('/courses');
       setCourses(res.data);
     } catch (err) {
       console.error(err);
@@ -83,7 +83,7 @@ const Teachers = () => {
         if (!updateData.password) delete updateData.password;
         await api.put(`/api/users/${editingId}`, updateData);
       } else {
-        await api.post('/api/users', formData);
+        await api.post('/users', formData);
       }
 
       setIsModalOpen(false);
@@ -335,3 +335,4 @@ const Teachers = () => {
 };
 
 export default Teachers;
+

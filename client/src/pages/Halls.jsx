@@ -24,7 +24,7 @@ const Halls = () => {
 
   const fetchHalls = async () => {
     try {
-      const res = await api.get('/api/halls');
+      const res = await api.get('/halls');
       setHalls(res.data);
       setLoading(false);
     } catch (err) {
@@ -49,7 +49,7 @@ const Halls = () => {
       if (editingId) {
         await api.put(`/api/halls/${editingId}`, formData);
       } else {
-        await api.post('/api/halls', formData);
+        await api.post('/halls', formData);
       }
 
       setIsModalOpen(false);
@@ -173,3 +173,4 @@ const Halls = () => {
 };
 
 export default Halls;
+

@@ -32,7 +32,7 @@ const Courses = () => {
 
   const fetchInstructors = async () => {
     try {
-      const res = await api.get('/api/users?role=instructor');
+      const res = await api.get('/users?role=instructor');
       setInstructors(res.data);
     } catch (err) {
       console.error(err);
@@ -41,7 +41,7 @@ const Courses = () => {
 
   const fetchHalls = async () => {
     try {
-      const res = await api.get('/api/halls');
+      const res = await api.get('/halls');
       setHalls(res.data);
     } catch (err) {
       console.error(err);
@@ -50,7 +50,7 @@ const Courses = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await api.get('/api/courses');
+      const res = await api.get('/courses');
       setCourses(res.data);
       setLoading(false);
     } catch (err) {
@@ -86,7 +86,7 @@ const Courses = () => {
       if (editingId) {
         await api.put(`/api/courses/${editingId}`, formData);
       } else {
-        await api.post('/api/courses', formData);
+        await api.post('/courses', formData);
       }
       
       setIsModalOpen(false);
@@ -307,3 +307,4 @@ const Courses = () => {
 };
 
 export default Courses;
+

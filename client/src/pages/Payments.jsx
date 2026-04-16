@@ -32,7 +32,7 @@ const Payments = () => {
 
   const fetchPayments = async () => {
     try {
-      const res = await api.get('/api/payments');
+      const res = await api.get('/payments');
       setPayments(res.data);
       setLoading(false);
     } catch (err) {
@@ -43,7 +43,7 @@ const Payments = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await api.get('/api/users?role=student');
+      const res = await api.get('/users?role=student');
       setStudents(res.data);
     } catch (err) {
       console.error(err);
@@ -52,7 +52,7 @@ const Payments = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await api.get('/api/courses');
+      const res = await api.get('/courses');
       setCourses(res.data);
     } catch (err) {
       console.error(err);
@@ -62,7 +62,7 @@ const Payments = () => {
   const handleAddPayment = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/api/payments', formData);
+      await api.post('/payments', formData);
       setIsModalOpen(false);
       setFormData({ student: '', course: '', amount: '', status: 'paid', note: '' });
       fetchPayments();
@@ -284,3 +284,4 @@ const Payments = () => {
 };
 
 export default Payments;
+

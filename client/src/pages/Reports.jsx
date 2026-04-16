@@ -15,7 +15,7 @@ const Reports = () => {
 
   const fetchReport = async () => {
     try {
-      const res = await api.get('/api/reports/profit');
+      const res = await api.get('/reports/profit');
       setReport(res.data);
       setLoading(false);
     } catch (err) {
@@ -106,3 +106,4 @@ const Reports = () => {
 };
 
 export default Reports;
+

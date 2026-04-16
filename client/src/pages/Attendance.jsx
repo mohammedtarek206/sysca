@@ -30,7 +30,7 @@ const Attendance = () => {
 
   const fetchRecords = async () => {
     try {
-      const res = await api.get('/api/attendance');
+      const res = await api.get('/attendance');
       setRecords(res.data);
       setLoading(false);
     } catch (err) {
@@ -40,7 +40,7 @@ const Attendance = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await api.get('/api/users?role=student');
+      const res = await api.get('/users?role=student');
       setStudents(res.data);
     } catch (err) {
       console.error(err);
@@ -49,7 +49,7 @@ const Attendance = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await api.get('/api/courses');
+      const res = await api.get('/courses');
       setCourses(res.data);
     } catch (err) {
       console.error(err);
@@ -59,7 +59,7 @@ const Attendance = () => {
   const handleAddAttendance = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/api/attendance', formData);
+      await api.post('/attendance', formData);
       setIsModalOpen(false);
       fetchRecords();
     } catch (err) {
@@ -241,3 +241,4 @@ const Attendance = () => {
 };
 
 export default Attendance;
+

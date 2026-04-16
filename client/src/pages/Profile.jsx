@@ -21,7 +21,7 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await api.get('/api/users/profile');
+      const res = await api.get('/users/profile');
       setProfile(res.data);
       setFormData({
         name: res.data.name,
@@ -221,3 +221,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

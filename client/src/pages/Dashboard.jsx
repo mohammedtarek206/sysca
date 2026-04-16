@@ -42,7 +42,7 @@ const Dashboard = () => {
     if (!user) return;
     try {
       if (user.role === 'admin') {
-        const res = await api.get('/api/stats');
+        const res = await api.get('/stats');
         setStats(res.data);
       } else if (user.role === 'instructor') {
         const res = await api.get(`/api/reports/teacher/${user.id}`);
@@ -210,3 +210,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+

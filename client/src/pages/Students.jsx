@@ -33,7 +33,7 @@ const Students = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await api.get('/api/users?role=student');
+      const res = await api.get('/users?role=student');
       setStudents(res.data);
       setLoading(false);
     } catch (err) {
@@ -44,7 +44,7 @@ const Students = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await api.get('/api/courses');
+      const res = await api.get('/courses');
       setCourses(res.data);
     } catch (err) {
       console.error(err);
@@ -96,7 +96,7 @@ const Students = () => {
         await api.put(`/api/users/${editingId}`, updateData);
       } else {
         // Create user
-        await api.post('/api/users', formData);
+        await api.post('/users', formData);
       }
       
       setIsModalOpen(false);
@@ -288,3 +288,4 @@ const Students = () => {
 };
 
 export default Students;
+
