@@ -27,6 +27,30 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Database Connection Middleware for Vercel Serverless
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/academy_db';
+let cachedConn = null;
+
+const connectDB = async (req, res, next) => {
+  try {
+    if (mongoose.connection.readyState >= 1) {
+      return next();
+    }
+    
+    if (!cachedConn) {
+      cachedConn = mongoose.connect(MONGO_URI);
+    }
+    
+    await cachedConn;
+    next();
+  } catch (err) {
+    console.error('Database connection error:', err);
+    res.status(500).json({ error: 'Database connection failed', details: err.message });
+  }
+};
+
+app.use(connectDB);
+
 // Routes
 app.use('/api/auth', require('../server/routes/auth'));
 app.use('/api/users', require('../server/routes/users'));
@@ -82,15 +106,14 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/academy_db';
 
-mongoose.connect(MONGO_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-    if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
+  mongoose.connect(MONGO_URI)
+    .then(() => {
+      console.log('Connected to MongoDB (Local)');
       app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    }
-  })
-  .catch(err => console.log('MongoDB connection error:', err));
+    })
+    .catch(err => console.log('MongoDB connection error:', err));
+}
 
 module.exports = app;
