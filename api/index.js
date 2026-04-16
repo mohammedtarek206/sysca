@@ -101,6 +101,40 @@ app.get('/api/init-db', async (req, res) => {
   }
 });
 
+// Isolated Login Route for Debugging
+app.post('/api/auth/login', async (req, res) => {
+  const bcrypt = require('bcryptjs');
+  const jwt = require('jsonwebtoken');
+  const User = require('../server/models/User');
+
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: 'البريد وكلمة المرور مطلوبان' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'بيانات الدخول غير صحيحة (U)' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'بيانات الدخول غير صحيحة (P)' });
+    }
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role }, 
+      process.env.JWT_SECRET || 'secret', 
+      { expiresIn: '1d' }
+    );
+    
+    res.json({ token, user: { id: user._id, name: user.name, role: user.role } });
+  } catch (err) {
+    res.status(500).send(`CRITICAL_LOGIN_ERROR: ${err.message}`);
+  }
+});
+
 app.get('/', (req, res) => {
   res.send('Academy API is running properly...');
 });
