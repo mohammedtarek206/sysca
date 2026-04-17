@@ -7,7 +7,7 @@
     "server"
   ],
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "scripts": {
     "build": "npm run build --workspace=client"
