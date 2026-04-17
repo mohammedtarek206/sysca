@@ -45,7 +45,7 @@ const connectDB = async (req, res, next) => {
     next();
   } catch (err) {
     console.error('Database connection error:', err);
-    res.status(500).json({ error: 'Database connection failed', details: err.message });
+    res.status(500).json({ message: 'Database connection failed', details: err.message });
   }
 };
 
