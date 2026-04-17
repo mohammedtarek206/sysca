@@ -45,10 +45,10 @@ const Dashboard = () => {
         const res = await api.get('/stats');
         setStats(res.data);
       } else if (user.role === 'instructor') {
-        const res = await api.get(`/api/reports/teacher/${user.id}`);
+        const res = await api.get(`/reports/teacher/${user.id}`);
         setRoleData(res.data);
       } else if (user.role === 'student') {
-        const res = await api.get(`/api/reports/student/${user.id}`);
+        const res = await api.get(`/reports/student/${user.id}`);
         setRoleData(res.data);
       }
       setLoading(false);
