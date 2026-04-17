@@ -8,5 +8,9 @@
   ],
   "scripts": {
     "build": "npm run build --workspace=client"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-linux-x64-gnu": "*",
+    "@rolldown/binding-linux-x64-musl": "*"
   }
 }
