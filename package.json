@@ -7,9 +7,9 @@
     "server"
   ],
   "engines": {
-    "node": "22.x"
+    "node": "20.x"
   },
   "scripts": {
-    "build": "npm install --workspace=client --include=optional && npm run build --workspace=client"
+    "build": "npm run build --workspace=client"
   }
 }
