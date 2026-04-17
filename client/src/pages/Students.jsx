@@ -66,7 +66,7 @@ const Students = () => {
   const handleEnrollSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/api/users/${selectedStudent._id}`, { enrolledCourses: enrollData });
+      await api.put(`/users/${selectedStudent._id}`, { enrolledCourses: enrollData });
       setIsEnrollModalOpen(false);
       fetchStudents();
     } catch (err) {
@@ -93,7 +93,7 @@ const Students = () => {
         // Update user
         const updateData = { ...formData };
         if (!updateData.password) delete updateData.password; // Don't update password if empty
-        await api.put(`/api/users/${editingId}`, updateData);
+        await api.put(`/users/${editingId}`, updateData);
       } else {
         // Create user
         await api.post('/users', formData);
@@ -111,7 +111,7 @@ const Students = () => {
   const handleDeleteStudent = async (id) => {
     if (window.confirm(t('students.actions.confirmDelete'))) {
       try {
-        await api.delete(`/api/users/${id}`);
+        await api.delete(`/users/${id}`);
         fetchStudents();
       } catch (err) {
         alert('Error deleting student');

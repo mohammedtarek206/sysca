@@ -49,7 +49,7 @@ const Profile = () => {
       };
       if (formData.password) updateData.password = formData.password;
 
-      const res = await api.put(`/api/users/${profile._id}`, updateData);
+      const res = await api.put(`/users/${profile._id}`, updateData);
       setProfile(res.data);
       setMessage({ type: 'success', text: 'تم تحديث البيانات بنجاح' });
       setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));

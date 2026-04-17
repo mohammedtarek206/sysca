@@ -81,7 +81,7 @@ const Teachers = () => {
       if (editingId) {
         const updateData = { ...formData };
         if (!updateData.password) delete updateData.password;
-        await api.put(`/api/users/${editingId}`, updateData);
+        await api.put(`/users/${editingId}`, updateData);
       } else {
         await api.post('/users', formData);
       }
@@ -98,7 +98,7 @@ const Teachers = () => {
   const handleDeleteTeacher = async (id) => {
     if (window.confirm(t('teachers.actions.confirmDelete'))) {
       try {
-        await api.delete(`/api/users/${id}`);
+        await api.delete(`/users/${id}`);
         fetchTeachers();
       } catch (err) {
         alert('Error deleting teacher');
