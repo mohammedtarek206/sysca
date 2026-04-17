@@ -107,11 +107,11 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
   mongoose.connect(MONGO_URI)
     .then(() => {
-      console.log('Connected to MongoDB (Local)');
-      app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+      console.log('Connected to MongoDB');
+      app.listen(PORT, () => console.log(`Server running locally on port ${PORT}`));
     })
     .catch(err => console.log('MongoDB connection error:', err));
 }
