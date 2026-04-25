@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
-import { TrendingUp, TrendingDown, DollarSign, Users, Award, PieChart, ArrowRight } from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, Users, Award, PieChart, ArrowRight, BarChart3, Wallet } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Reports = () => {
@@ -24,80 +24,111 @@ const Reports = () => {
     }
   };
 
-  if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>{t('reports.loading')}</div>;
-  if (!report) return <div style={{ padding: '40px', textAlign: 'center' }}>{t('reports.error')}</div>;
+  if (loading) return <div style={{ padding: '100px', textAlign: 'center', color: 'var(--text-dim)' }}>{t('reports.loading')}...</div>;
+  if (!report) return <div style={{ padding: '100px', textAlign: 'center', color: 'var(--text-dim)' }}>{t('reports.error')}</div>;
 
   return (
     <div className="animate-fade-in">
-      <div style={{ marginBottom: '40px' }}>
-        <h1 style={{ fontSize: '2.2rem', marginBottom: '8px' }}>{t('reports.title')}</h1>
-        <p style={{ color: 'var(--text-muted)' }}>{t('reports.subtitle')}</p>
+      <div style={{ marginBottom: '48px' }}>
+        <h1 style={{ fontSize: '2.4rem', fontWeight: '800', marginBottom: '12px' }}>{t('reports.title')}</h1>
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>{t('reports.subtitle')}</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', marginBottom: '48px' }}>
         {/* Total Income Card */}
-        <div className="glass-card" style={{ padding: '30px', borderLeft: isRTL ? 'none' : '5px solid #10b981', borderRight: isRTL ? '5px solid #10b981' : 'none' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-            <div style={{ background: '#10b98122', color: '#10b981', padding: '12px', borderRadius: '15px' }}>
+        <div className="glass-card" style={{ padding: '32px', borderBottom: '4px solid var(--success)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <div style={{ width: '56px', height: '56px', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--success)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '16px' }}>
               <TrendingUp size={28} />
             </div>
+            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--success)', background: 'rgba(16, 185, 129, 0.1)', padding: '4px 12px', borderRadius: '20px' }}>الإيرادات</span>
           </div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '8px' }}>{t('reports.totalIncome')}</p>
-          <h2 style={{ fontSize: '2rem', fontWeight: '700' }}>{report.totalIncome} <span style={{ fontSize: '1rem', fontWeight: '400' }}>{t('common.currency')}</span></h2>
+          <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', marginBottom: '8px', fontWeight: '600' }}>{t('reports.totalIncome')}</p>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: '900' }}>{report.totalIncome} <span style={{ fontSize: '1.1rem', fontWeight: '600', color: 'var(--text-dim)' }}>{t('common.currency')}</span></h2>
         </div>
 
         {/* Expenses Card */}
-        <div className="glass-card" style={{ padding: '30px', borderLeft: isRTL ? 'none' : '5px solid #f43f5e', borderRight: isRTL ? '5px solid #f43f5e' : 'none' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-            <div style={{ background: '#f43f5e22', color: '#f43f5e', padding: '12px', borderRadius: '15px' }}>
+        <div className="glass-card" style={{ padding: '32px', borderBottom: '4px solid var(--error)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <div style={{ width: '56px', height: '56px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--error)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '16px' }}>
               <TrendingDown size={28} />
             </div>
+            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--error)', background: 'rgba(239, 68, 68, 0.1)', padding: '4px 12px', borderRadius: '20px' }}>المصروفات</span>
           </div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '8px' }}>{t('reports.totalExpenses')}</p>
-          <h2 style={{ fontSize: '2rem', fontWeight: '700' }}>{report.totalSalaries + report.totalCommissions} <span style={{ fontSize: '1rem', fontWeight: '400' }}>{t('common.currency')}</span></h2>
+          <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', marginBottom: '8px', fontWeight: '600' }}>{t('reports.totalExpenses')}</p>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: '900' }}>{report.totalSalaries + report.totalCommissions + report.totalAcademyExpenses} <span style={{ fontSize: '1.1rem', fontWeight: '600', color: 'var(--text-dim)' }}>{t('common.currency')}</span></h2>
         </div>
 
         {/* Net Profit Card */}
-        <div className="glass-card" style={{ padding: '30px', borderLeft: isRTL ? 'none' : '5px solid var(--primary)', borderRight: isRTL ? '5px solid var(--primary)' : 'none', background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(99, 102, 241, 0.1) 100%)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-            <div style={{ background: 'var(--primary)22', color: 'var(--primary)', padding: '12px', borderRadius: '15px' }}>
-              <PieChart size={28} />
+        <div className="glass-card" style={{ 
+          padding: '32px', 
+          borderBottom: '4px solid var(--primary)',
+          background: 'linear-gradient(135deg, rgba(0, 245, 212, 0.05) 0%, rgba(0, 245, 212, 0.1) 100%)'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <div style={{ width: '56px', height: '56px', background: 'var(--primary-glow)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '16px', border: '1px solid var(--primary-dark)' }}>
+              <TrendingUp size={28} />
             </div>
+            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--primary)', background: 'var(--primary-glow)', padding: '4px 12px', borderRadius: '20px', border: '1px solid var(--primary-dark)' }}>صافي الربح</span>
           </div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '8px' }}>{t('reports.netProfit')}</p>
-          <h2 style={{ fontSize: '2.2rem', fontWeight: '800', color: 'var(--primary)' }}>{report.netProfit} <span style={{ fontSize: '1rem', fontWeight: '400' }}>{t('common.currency')}</span></h2>
+          <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', marginBottom: '8px', fontWeight: '600' }}>{t('reports.netProfit')}</p>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: '900', color: 'var(--primary)' }}>{report.netProfit} <span style={{ fontSize: '1.1rem', fontWeight: '600', color: 'var(--text-dim)' }}>{t('common.currency')}</span></h2>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-        <div className="glass-card" style={{ padding: '24px' }}>
-          <h3 style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-             <Award size={20} color="var(--primary)" />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '32px' }}>
+        <div className="glass-card" style={{ padding: '32px' }}>
+          <h3 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+             <Wallet size={24} color="var(--primary)" />
              {t('reports.expensesDetails')}
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px' }}>
-              <span>{t('reports.fixedSalaries')}</span>
-              <span style={{ fontWeight: '600' }}>{report.totalSalaries} {t('common.currency')}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid var(--card-border)' }}>
+              <span style={{ color: 'var(--text-dim)', fontWeight: '600' }}>{t('reports.fixedSalaries')}</span>
+              <span style={{ fontWeight: '800', fontSize: '1.2rem' }}>{report.totalSalaries} {t('common.currency')}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px' }}>
-              <span>{t('reports.commissionsDue')}</span>
-              <span style={{ fontWeight: '600' }}>{report.totalCommissions} {t('common.currency')}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid var(--card-border)' }}>
+              <span style={{ color: 'var(--text-dim)', fontWeight: '600' }}>{t('reports.commissionsDue')}</span>
+              <span style={{ fontWeight: '800', fontSize: '1.2rem' }}>{report.totalCommissions} {t('common.currency')}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', background: 'var(--primary)10', borderRadius: '12px', marginTop: '10px' }}>
-              <span style={{ fontWeight: '700' }}>{t('reports.total')}</span>
-              <span style={{ fontWeight: '700', color: 'var(--primary)' }}>{report.totalSalaries + report.totalCommissions} {t('common.currency')}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid var(--card-border)' }}>
+              <span style={{ color: 'var(--text-dim)', fontWeight: '600' }}>{t('expenses.title')}</span>
+              <span style={{ fontWeight: '800', fontSize: '1.2rem' }}>{report.totalAcademyExpenses} {t('common.currency')}</span>
+            </div>
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center', 
+              padding: '24px', 
+              background: 'var(--primary-glow)', 
+              borderRadius: '16px', 
+              marginTop: '16px',
+              border: '1px solid var(--primary-dark)'
+            }}>
+              <span style={{ fontWeight: '800', fontSize: '1.1rem' }}>{t('reports.total')}</span>
+              <span style={{ fontWeight: '900', color: 'var(--primary)', fontSize: '1.3rem' }}>{report.totalSalaries + report.totalCommissions + report.totalAcademyExpenses} {t('common.currency')}</span>
             </div>
           </div>
         </div>
 
-        <div className="glass-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--primary)15', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-            <DollarSign size={40} color="var(--primary)" />
+        <div className="glass-card" style={{ padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+          <div style={{ 
+            width: '100px', 
+            height: '100px', 
+            borderRadius: '32px', 
+            background: 'var(--primary-glow)', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            marginBottom: '32px',
+            border: '1px solid var(--primary-dark)',
+            boxShadow: '0 20px 40px rgba(0, 245, 212, 0.15)'
+          }}>
+            <PieChart size={48} color="var(--primary)" />
           </div>
-          <h3 style={{ marginBottom: '10px' }}>{t('reports.financialPerformance')}</h3>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', maxWidth: '300px', lineHeight: '1.6' }}>
-            {t('reports.performanceDesc1')} {( (report.netProfit / report.totalIncome) * 100).toFixed(1)}%. {t('reports.performanceDesc2')}
+          <h3 style={{ fontSize: '1.6rem', fontWeight: '800', marginBottom: '16px' }}>{t('reports.financialPerformance')}</h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '360px', lineHeight: '1.8' }}>
+            {t('reports.performanceDesc1')} <span style={{ color: 'var(--primary)', fontWeight: '800' }}>{( (report.netProfit / report.totalIncome) * 100).toFixed(1)}%</span>. {t('reports.performanceDesc2')}
           </p>
         </div>
       </div>
@@ -106,4 +137,5 @@ const Reports = () => {
 };
 
 export default Reports;
+
 

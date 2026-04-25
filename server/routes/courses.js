@@ -33,8 +33,8 @@ router.get('/:id', auth, async (req, res) => {
 
 // Create course (Admin only)
 router.post('/', auth, authorize(['admin']), async (req, res) => {
-  const { name, price, duration, instructors, hall } = req.body;
-  const course = new Course({ name, price, duration, instructors, hall });
+  const { name, price, duration, instructors, hall, schedule } = req.body;
+  const course = new Course({ name, price, duration, instructors, hall, schedule });
   try {
     const newCourse = await course.save();
 

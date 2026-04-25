@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import api from '../api';
-import { User, Mail, Phone, Shield, Calendar, Save, Key, UserCircle } from 'lucide-react';
+import { User, Mail, Phone, Shield, Calendar, Save, Key, UserCircle, BadgeCheck, ShieldCheck } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
 const Profile = () => {
@@ -54,77 +54,103 @@ const Profile = () => {
       setMessage({ type: 'success', text: 'تم تحديث البيانات بنجاح' });
       setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));
       
-      // Clear message after 3 seconds
       setTimeout(() => setMessage({ type: '', text: '' }), 3000);
     } catch (err) {
       setMessage({ type: 'error', text: err.response?.data?.message || 'حدث خطأ أثناء التحديث' });
     }
   };
 
-  if (loading) return <div style={{ textAlign: 'center', padding: '50px' }}>جاري التحميل...</div>;
+  if (loading) return <div style={{ textAlign: 'center', padding: '100px', color: 'var(--text-dim)' }}>جاري التحميل...</div>;
 
   return (
-    <div className="animate-fade-in" style={{ maxWidth: '900px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '30px' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '8px' }}>الملف الشخصي</h1>
-        <p style={{ color: 'var(--text-muted)' }}>إدارة بياناتك الشخصية وإعدادات الحساب</p>
+    <div className="animate-fade-in" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h1 style={{ fontSize: '2.4rem', fontWeight: '800', marginBottom: '12px' }}>الملف الشخصي</h1>
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>إدارة بياناتك الشخصية وإعدادات الحساب</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 2fr', gap: '24px' }}>
-        {/* Profile Sidebar Info */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <div className="glass-card" style={{ padding: '30px', textAlign: 'center' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          <div className="glass-card" style={{ padding: '40px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
             <div style={{ 
-              width: '100px', 
-              height: '100px', 
+              position: 'absolute', 
+              top: '-20px', 
+              right: '-20px', 
+              width: '120px', 
+              height: '120px', 
+              background: 'var(--primary-glow)', 
               borderRadius: '50%', 
-              background: 'var(--primary)', 
-              margin: '0 auto 20px',
+              filter: 'blur(40px)', 
+              opacity: '0.3' 
+            }}></div>
+            
+            <div style={{ 
+              width: '120px', 
+              height: '120px', 
+              borderRadius: '32px', 
+              background: 'var(--primary-glow)', 
+              margin: '0 auto 24px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '2.5rem',
-              fontWeight: 'bold',
-              color: 'white',
-              boxShadow: '0 10px 25px rgba(99, 102, 241, 0.3)'
+              fontSize: '3rem',
+              fontWeight: '900',
+              color: 'var(--primary)',
+              border: '2px solid var(--primary-dark)',
+              textShadow: '0 0 20px rgba(0, 245, 212, 0.5)'
             }}>
               {profile?.name?.charAt(0)}
             </div>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '5px' }}>{profile?.name}</h2>
+            
+            <h2 style={{ fontSize: '1.8rem', fontWeight: '800', marginBottom: '8px' }}>{profile?.name}</h2>
+            
             <div style={{ 
-              display: 'inline-block', 
-              padding: '4px 12px', 
-              borderRadius: '20px', 
-              fontSize: '0.8rem',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid var(--glass-border)',
-              color: 'var(--text-muted)',
-              marginBottom: '20px'
+              display: 'inline-flex', 
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 16px', 
+              borderRadius: '12px', 
+              fontSize: '0.9rem',
+              fontWeight: '700',
+              background: 'rgba(0, 245, 212, 0.1)',
+              color: 'var(--primary)',
+              marginBottom: '32px',
+              border: '1px solid rgba(0, 245, 212, 0.2)'
             }}>
+              <BadgeCheck size={16} />
               {profile?.role === 'student' ? 'طالب' : profile?.role === 'instructor' ? 'مدرس' : 'مدير'}
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', textAlign: 'right' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem' }}>
-                <Mail size={16} color="var(--primary)" />
-                <span style={{ color: 'var(--text-muted)' }}>{profile?.email}</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'right', background: 'rgba(255,255,255,0.02)', padding: '24px', borderRadius: '20px', border: '1px solid var(--card-border)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Mail size={20} color="var(--primary)" />
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>البريد الإلكتروني</span>
+                  <span style={{ color: 'white', fontWeight: '600' }}>{profile?.email}</span>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem' }}>
-                <Phone size={16} color="var(--primary)" />
-                <span style={{ color: 'var(--text-muted)' }}>{profile?.phone}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Phone size={20} color="var(--primary)" />
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>رقم الهاتف</span>
+                  <span style={{ color: 'white', fontWeight: '600' }}>{profile?.phone}</span>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.9rem' }}>
-                <Calendar size={16} color="var(--primary)" />
-                <span style={{ color: 'var(--text-muted)' }}>انضم في: {new Date(profile?.createdAt).toLocaleDateString('ar-EG')}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Calendar size={20} color="var(--primary)" />
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>تاريخ الانضمام</span>
+                  <span style={{ color: 'white', fontWeight: '600' }}>{new Date(profile?.createdAt).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="glass-card" style={{ padding: '24px' }}>
-            <h3 style={{ fontSize: '1.1rem', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Shield size={18} color="var(--primary)" /> الصلاحيات
+          <div className="glass-card" style={{ padding: '32px', borderLeft: '4px solid var(--primary)' }}>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <ShieldCheck size={24} color="var(--primary)" /> الصلاحيات والوصول
             </h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+            <p style={{ fontSize: '1rem', color: 'var(--text-muted)', lineHeight: '1.8' }}>
               لديك صلاحيات {profile?.role === 'admin' ? 'الوصول الكامل للنظام وإدارة المستخدمين والماليات.' : 
                profile?.role === 'instructor' ? 'إدارة الكورسات الخاصة بك وتسجيل حضور الطلاب.' : 
                'الوصول للمحتوى التعليمي ومتابعة حضورك ومدفوعاتك.'}
@@ -132,85 +158,89 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Edit Form Content */}
-        <div className="glass-card" style={{ padding: '40px' }}>
-          <h3 style={{ fontSize: '1.3rem', marginBottom: '30px' }}>تحديث البيانات</h3>
+        <div className="glass-card" style={{ padding: '48px' }}>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '32px' }}>تحديث بيانات الحساب</h3>
           
           {message.text && (
             <div style={{ 
-              padding: '12px 20px', 
-              borderRadius: '10px', 
-              marginBottom: '25px',
-              fontSize: '0.9rem',
-              background: message.type === 'success' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(244, 63, 94, 0.1)',
-              color: message.type === 'success' ? '#10b981' : '#f43f5e',
-              border: `1px solid ${message.type === 'success' ? '#10b98133' : '#f43f5e33'}`
+              padding: '16px 24px', 
+              borderRadius: '16px', 
+              marginBottom: '32px',
+              fontSize: '1rem',
+              fontWeight: '600',
+              background: message.type === 'success' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+              color: message.type === 'success' ? 'var(--success)' : 'var(--error)',
+              border: `1px solid ${message.type === 'success' ? 'var(--success)' : 'var(--error)'}22`,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px'
             }}>
+              {message.type === 'success' ? <BadgeCheck size={20} /> : <Shield size={20} />}
               {message.text}
             </div>
           )}
 
-          <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontSize: '0.9rem', fontWeight: '500' }}>الاسم بالكامل</label>
+              <label style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--text-muted)' }}>الاسم بالكامل</label>
               <div style={{ position: 'relative' }}>
-                <User size={18} style={{ position: 'absolute', right: '16px', top: '15px', color: 'var(--text-muted)' }} />
+                <User size={18} style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
                 <input 
                   type="text" 
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   required
-                  style={{ width: '100%', paddingRight: '45px' }}
+                  style={{ width: '100%', paddingRight: '48px', height: '56px' }}
                 />
               </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontSize: '0.9rem', fontWeight: '500' }}>رقم الهاتف</label>
+              <label style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--text-muted)' }}>رقم الهاتف</label>
               <div style={{ position: 'relative' }}>
-                <Phone size={18} style={{ position: 'absolute', right: '16px', top: '15px', color: 'var(--text-muted)' }} />
+                <Phone size={18} style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
                 <input 
                   type="text" 
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   required
-                  style={{ width: '100%', paddingRight: '45px' }}
+                  style={{ width: '100%', paddingRight: '48px', height: '56px' }}
                 />
               </div>
             </div>
 
-            <hr style={{ border: 'none', borderTop: '1px solid var(--glass-border)', margin: '10px 0' }} />
+            <div style={{ margin: '16px 0', height: '1px', background: 'linear-gradient(90deg, transparent, var(--card-border), transparent)' }}></div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontSize: '0.9rem', fontWeight: '500' }}>كلمة المرور الجديدة (اتركها فارغة للتخطي)</label>
+              <label style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--text-muted)' }}>كلمة المرور الجديدة <span style={{ fontWeight: '400', fontSize: '0.8rem', color: 'var(--text-dim)' }}>(اتركها فارغة للتخطي)</span></label>
               <div style={{ position: 'relative' }}>
-                <Key size={18} style={{ position: 'absolute', right: '16px', top: '15px', color: 'var(--text-muted)' }} />
+                <Key size={18} style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
                 <input 
                   type="password" 
                   value={formData.password}
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                   placeholder="********"
-                  style={{ width: '100%', paddingRight: '45px' }}
+                  style={{ width: '100%', paddingRight: '48px', height: '56px' }}
                 />
               </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontSize: '0.9rem', fontWeight: '500' }}>تأكيد كلمة المرور</label>
+              <label style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--text-muted)' }}>تأكيد كلمة المرور</label>
               <div style={{ position: 'relative' }}>
-                <Key size={18} style={{ position: 'absolute', right: '16px', top: '15px', color: 'var(--text-muted)' }} />
+                <Key size={18} style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
                 <input 
                   type="password" 
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                   placeholder="********"
-                  style={{ width: '100%', paddingRight: '45px' }}
+                  style={{ width: '100%', paddingRight: '48px', height: '56px' }}
                 />
               </div>
             </div>
 
-            <button type="submit" className="primary-btn" style={{ height: '52px', marginTop: '10px' }}>
-              <Save size={20} />
+            <button type="submit" className="primary-btn" style={{ height: '60px', marginTop: '16px', fontSize: '1.1rem' }}>
+              <Save size={22} />
               حفظ التغييرات
             </button>
           </form>
@@ -221,4 +251,5 @@ const Profile = () => {
 };
 
 export default Profile;
+
 

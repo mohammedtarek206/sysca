@@ -35,6 +35,7 @@ const Attendance = () => {
       setLoading(false);
     } catch (err) {
       console.error(err);
+      setLoading(false);
     }
   };
 
@@ -72,54 +73,56 @@ const Attendance = () => {
     record.course?.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getStatusIcon = (status) => {
+  const getStatusConfig = (status) => {
     switch (status) {
-      case 'present': return <CheckCircle size={16} color="#10b981" />;
-      case 'absent': return <XCircle size={16} color="#f43f5e" />;
-      case 'late': return <Clock size={16} color="#f59e0b" />;
-      default: return null;
-    }
-  };
-
-  const getStatusText = (status) => {
-    switch (status) {
-      case 'present': return t('attendance.status.present');
-      case 'absent': return t('attendance.status.absent');
-      case 'late': return t('attendance.status.late');
-      default: return status;
+      case 'present': return { icon: <CheckCircle size={16} />, color: 'var(--success)', bg: 'rgba(16, 185, 129, 0.1)', text: t('attendance.status.present') };
+      case 'absent': return { icon: <XCircle size={16} />, color: 'var(--error)', bg: 'rgba(239, 68, 68, 0.1)', text: t('attendance.status.absent') };
+      case 'late': return { icon: <Clock size={16} />, color: 'var(--warning)', bg: 'rgba(245, 158, 11, 0.1)', text: t('attendance.status.late') };
+      default: return { icon: null, color: 'var(--text-muted)', bg: 'transparent', text: status };
     }
   };
 
   return (
     <div className="animate-fade-in">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px', flexWrap: 'wrap', gap: '24px' }}>
         <div>
-          <h1 style={{ fontSize: '2rem', marginBottom: '8px' }}>{t('attendance.title')}</h1>
-          <p style={{ color: 'var(--text-muted)' }}>{t('attendance.subtitle')}</p>
+          <h1 style={{ fontSize: '2.4rem', fontWeight: '800', marginBottom: '12px' }}>{t('attendance.title')}</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>{t('attendance.subtitle')}</p>
         </div>
         {currentUser?.role !== 'student' && (
-          <button className="primary-btn" onClick={() => setIsModalOpen(true)}>
+          <button className="primary-btn" style={{ padding: '14px 28px' }} onClick={() => setIsModalOpen(true)}>
             <Plus size={20} />
             {t('attendance.addNew')}
           </button>
         )}
       </div>
 
-      <div style={{ position: 'relative', marginBottom: '24px' }}>
-        <Search size={18} style={{ position: 'absolute', right: isRTL ? '16px' : 'auto', left: isRTL ? 'auto' : '16px', top: '15px', color: 'var(--text-muted)' }} />
+      <div style={{ position: 'relative', marginBottom: '32px', maxWidth: '500px' }}>
+        <Search size={18} style={{ 
+          position: 'absolute', 
+          right: isRTL ? '16px' : 'auto', 
+          left: isRTL ? 'auto' : '16px', 
+          top: '50%', 
+          transform: 'translateY(-50%)',
+          color: 'var(--text-dim)' 
+        }} />
         <input 
           type="text" 
           placeholder={t('attendance.searchPlaceholder')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ width: '100%', maxWidth: '400px', paddingRight: isRTL ? '45px' : '16px', paddingLeft: isRTL ? '16px' : '45px' }}
+          style={{ 
+            paddingRight: isRTL ? '48px' : '16px', 
+            paddingLeft: isRTL ? '16px' : '48px',
+            height: '52px'
+          }}
         />
       </div>
 
-      <div className="glass-card" style={{ overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: isRTL ? 'right' : 'left' }}>
+      <div className="glass-card" style={{ padding: '8px' }}>
+        <table style={{ textAlign: isRTL ? 'right' : 'left' }}>
           <thead>
-            <tr style={{ background: 'rgba(255, 255, 255, 0.05)' }}>
+            <tr>
               <th style={{ padding: '20px' }}>{t('attendance.table.student')}</th>
               <th style={{ padding: '20px' }}>{t('attendance.table.course')}</th>
               <th style={{ padding: '20px' }}>{t('attendance.table.date')}</th>
@@ -128,42 +131,46 @@ const Attendance = () => {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan="4" style={{ padding: '40px', textAlign: 'center' }}>{t('common.loading')}</td></tr>
+              <tr><td colSpan="4" style={{ padding: '60px', textAlign: 'center', color: 'var(--text-dim)' }}>{t('common.loading')}...</td></tr>
             ) : filteredRecords.length === 0 ? (
-              <tr><td colSpan="4" style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>{t('attendance.table.empty')}</td></tr>
+              <tr><td colSpan="4" style={{ padding: '60px', textAlign: 'center', color: 'var(--text-dim)' }}>{t('attendance.table.empty')}</td></tr>
             ) : filteredRecords.map(record => (
-              <tr key={record._id} style={{ borderBottom: '1px solid var(--glass-border)', transition: 'background 0.3s' }}>
-                <td style={{ padding: '16px 20px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <User size={16} color="var(--primary)" />
-                    <span style={{ fontWeight: '500' }}>{record.student?.name}</span>
+              <tr key={record._id}>
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'var(--primary-glow)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <User size={18} color="var(--primary)" />
+                    </div>
+                    <span style={{ fontWeight: '700' }}>{record.student?.name}</span>
                   </div>
                 </td>
-                <td style={{ padding: '16px 20px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}>
-                    <BookOpen size={14} />
-                    {record.course?.name}
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-muted)' }}>
+                    <BookOpen size={16} style={{ color: 'var(--secondary)' }} />
+                    <span style={{ fontWeight: '500' }}>{record.course?.name}</span>
                   </div>
                 </td>
-                <td style={{ padding: '16px 20px', color: 'var(--text-muted)' }}>
-                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Calendar size={14} />
+                <td>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-dim)', fontSize: '0.9rem' }}>
+                    <Calendar size={16} />
                     {new Date(record.date).toLocaleDateString(isRTL ? 'ar-EG' : 'en-US')}
                   </div>
                 </td>
-                <td style={{ padding: '16px 20px' }}>
+                <td>
                   <div style={{ 
                     display: 'inline-flex', 
                     alignItems: 'center', 
-                    gap: '6px',
-                    padding: '4px 12px', 
-                    borderRadius: '20px', 
+                    gap: '8px',
+                    padding: '8px 16px', 
+                    borderRadius: '12px', 
                     fontSize: '0.85rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid var(--glass-border)'
+                    fontWeight: '700',
+                    background: getStatusConfig(record.status).bg,
+                    color: getStatusConfig(record.status).color,
+                    border: `1px solid ${getStatusConfig(record.status).color}22`
                   }}>
-                    {getStatusIcon(record.status)}
-                    {getStatusText(record.status)}
+                    {getStatusConfig(record.status).icon}
+                    {getStatusConfig(record.status).text}
                   </div>
                 </td>
               </tr>
@@ -177,14 +184,13 @@ const Attendance = () => {
         onClose={() => setIsModalOpen(false)} 
         title={t('attendance.modal.title')}
       >
-        <form onSubmit={handleAddAttendance} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <form onSubmit={handleAddAttendance} style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '10px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label>{t('attendance.modal.labels.course')}</label>
+            <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('attendance.modal.labels.course')}</label>
             <select 
               required
               value={formData.course}
               onChange={(e) => setFormData({...formData, course: e.target.value})}
-              style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--glass-border)', borderRadius: '10px', color: 'white' }}
             >
               <option value="" style={{ background: 'var(--bg-dark)' }}>{t('attendance.modal.placeholders.chooseCourse')}</option>
               {courses.map(course => (
@@ -195,12 +201,11 @@ const Attendance = () => {
             </select>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label>{t('attendance.modal.labels.student')}</label>
+            <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('attendance.modal.labels.student')}</label>
             <select 
               required
               value={formData.student}
               onChange={(e) => setFormData({...formData, student: e.target.value})}
-              style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--glass-border)', borderRadius: '10px', color: 'white' }}
             >
               <option value="" style={{ background: 'var(--bg-dark)' }}>{t('attendance.modal.placeholders.chooseStudent')}</option>
               {students.map(student => (
@@ -211,7 +216,7 @@ const Attendance = () => {
             </select>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label>{t('attendance.modal.labels.date')}</label>
+            <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('attendance.modal.labels.date')}</label>
             <input 
               type="date" 
               required 
@@ -220,18 +225,17 @@ const Attendance = () => {
             />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label>{t('attendance.modal.labels.status')}</label>
+            <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('attendance.modal.labels.status')}</label>
             <select 
               value={formData.status}
               onChange={(e) => setFormData({...formData, status: e.target.value})}
-              style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--glass-border)', borderRadius: '10px', color: 'white' }}
             >
               <option value="present" style={{ background: 'var(--bg-dark)' }}>{t('attendance.status.present')}</option>
               <option value="absent" style={{ background: 'var(--bg-dark)' }}>{t('attendance.status.absent')}</option>
               <option value="late" style={{ background: 'var(--bg-dark)' }}>{t('attendance.status.late')}</option>
             </select>
           </div>
-          <button type="submit" className="primary-btn" style={{ marginTop: '10px' }}>
+          <button type="submit" className="primary-btn" style={{ height: '52px', marginTop: '12px' }}>
             {t('attendance.modal.saveBtn')}
           </button>
         </form>
@@ -241,4 +245,5 @@ const Attendance = () => {
 };
 
 export default Attendance;
+
 

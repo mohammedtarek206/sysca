@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
-import { UserPlus, Search, Edit2, Trash2, Mail, Phone, Wallet, Percent, Banknote, BookOpen, FileText } from 'lucide-react';
+import { UserPlus, Search, Edit2, Trash2, Mail, Phone, Wallet, Percent, Banknote, BookOpen, FileText, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Modal from '../components/Modal';
@@ -113,96 +113,116 @@ const Teachers = () => {
 
   return (
     <div className="animate-fade-in">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px', flexWrap: 'wrap', gap: '20px' }}>
         <div>
-          <h1 style={{ fontSize: '2rem', marginBottom: '8px' }}>{t('teachers.title')}</h1>
-          <p style={{ color: 'var(--text-muted)' }}>{t('teachers.subtitle')}</p>
+          <h1 style={{ fontSize: '2.4rem', fontWeight: '800', marginBottom: '12px' }}>{t('teachers.title')}</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>{t('teachers.subtitle')}</p>
         </div>
-        <button className="primary-btn" onClick={() => { setEditingId(null); setFormData({ name: '', email: '', phone: '', password: '', role: 'instructor', salary: 0, commissionRate: 0, assignedCourses: [] }); setIsModalOpen(true); }}>
+        <button className="primary-btn" style={{ padding: '14px 28px' }} onClick={() => { setEditingId(null); setFormData({ name: '', email: '', phone: '', password: '', role: 'instructor', salary: 0, commissionRate: 0, assignedCourses: [] }); setIsModalOpen(true); }}>
           <UserPlus size={20} />
           {t('teachers.addNew')}
         </button>
       </div>
 
-      <div style={{ position: 'relative', marginBottom: '24px' }}>
-        <Search size={18} style={{ position: 'absolute', right: isRTL ? '16px' : 'auto', left: isRTL ? 'auto' : '16px', top: '15px', color: 'var(--text-muted)' }} />
+      <div style={{ position: 'relative', marginBottom: '32px', maxWidth: '500px' }}>
+        <Search size={18} style={{ 
+          position: 'absolute', 
+          right: isRTL ? '16px' : 'auto', 
+          left: isRTL ? 'auto' : '16px', 
+          top: '50%', 
+          transform: 'translateY(-50%)',
+          color: 'var(--text-dim)' 
+        }} />
         <input 
           type="text" 
           placeholder={t('teachers.searchPlaceholder')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ width: '100%', maxWidth: '400px', paddingRight: isRTL ? '45px' : '16px', paddingLeft: isRTL ? '16px' : '45px' }}
+          style={{ 
+            paddingRight: isRTL ? '48px' : '16px', 
+            paddingLeft: isRTL ? '16px' : '48px',
+            height: '52px'
+          }}
         />
       </div>
 
-      <div className="glass-card" style={{ overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: isRTL ? 'right' : 'left' }}>
+      <div className="glass-card" style={{ padding: '8px' }}>
+        <table style={{ textAlign: isRTL ? 'right' : 'left' }}>
           <thead>
-            <tr style={{ background: 'rgba(255, 255, 255, 0.05)' }}>
-              <th style={{ padding: '20px' }}>{t('teachers.table.name')}</th>
-              <th style={{ padding: '20px' }}>{t('teachers.table.contactInfo')}</th>
-              <th style={{ padding: '20px' }}>{t('teachers.table.salaryCommission')}</th>
-              <th style={{ padding: '20px' }}>{t('teachers.table.courses')}</th>
-              <th style={{ padding: '20px' }}>{t('teachers.table.actions')}</th>
+            <tr>
+              <th>{t('teachers.table.name')}</th>
+              <th>{t('teachers.table.contactInfo')}</th>
+              <th>{t('teachers.table.salaryCommission')}</th>
+              <th>{t('teachers.table.courses')}</th>
+              <th style={{ textAlign: 'center' }}>{t('teachers.table.actions')}</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan="5" style={{ padding: '40px', textAlign: 'center' }}>{t('common.loading')}</td></tr>
+              <tr><td colSpan="5" style={{ padding: '60px', textAlign: 'center', color: 'var(--text-dim)' }}>{t('common.loading')}...</td></tr>
             ) : filteredTeachers.length === 0 ? (
-              <tr><td colSpan="5" style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>{t('teachers.empty')}</td></tr>
+              <tr><td colSpan="5" style={{ padding: '60px', textAlign: 'center', color: 'var(--text-dim)' }}>{t('teachers.empty')}</td></tr>
             ) : filteredTeachers.map(teacher => (
-              <tr key={teacher._id} style={{ borderBottom: '1px solid var(--glass-border)', transition: 'background 0.3s' }}>
-                <td style={{ padding: '16px 20px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>
-                      {teacher.name.charAt(0)}
+              <tr key={teacher._id}>
+                <td>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    <div style={{ 
+                      width: '42px', 
+                      height: '42px', 
+                      borderRadius: '12px', 
+                      background: 'rgba(99, 102, 241, 0.1)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      border: '1px solid var(--secondary)'
+                    }}>
+                      <GraduationCap size={20} color="var(--secondary)" />
                     </div>
-                    <span style={{ fontWeight: '500' }}>{teacher.name}</span>
+                    <span style={{ fontWeight: '700', fontSize: '1rem' }}>{teacher.name}</span>
                   </div>
                 </td>
-                <td style={{ padding: '16px 20px' }}>
+                <td>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                      <Phone size={14} /> {teacher.phone}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                      <Phone size={14} style={{ color: 'var(--primary)' }} /> {teacher.phone}
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-dim)' }}>
                       <Mail size={14} /> {teacher.email}
                     </div>
                   </div>
                 </td>
-                <td style={{ padding: '16px 20px' }}>
-                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}>
-                        <Banknote size={14} color="#10b981" /> {t('teachers.salaryValue', { value: teacher.salary || 0 })}
+                <td>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', fontWeight: '600', color: 'var(--success)' }}>
+                        <Banknote size={14} /> {t('teachers.salaryValue', { value: teacher.salary || 0 })}
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}>
-                        <Percent size={14} color="#6366f1" /> {t('teachers.commissionValue', { value: teacher.commissionRate || 0 })}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                        <Percent size={14} style={{ color: 'var(--secondary)' }} /> {t('teachers.commissionValue', { value: teacher.commissionRate || 0 })}
                       </div>
                    </div>
                 </td>
-                <td style={{ padding: '16px 20px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', background: 'var(--primary)15', padding: '6px 12px', borderRadius: '10px', width: 'fit-content' }}>
+                <td>
+                    <div className="secondary-btn" style={{ padding: '8px 16px', borderRadius: '10px', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '8px', width: 'fit-content' }}>
                       <BookOpen size={16} />
-                      <span style={{ fontSize: '0.85rem' }}>{t('teachers.courseCount', { count: teacher.assignedCourses?.length || 0 })}</span>
+                      {t('teachers.courseCount', { count: teacher.assignedCourses?.length || 0 })}
                     </div>
                 </td>
-                <td style={{ padding: '16px 20px' }}>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <button onClick={() => navigate(`/statement/teacher/${teacher._id}`)} title={t('teachers.actions.statement')} style={{ color: '#10b981', background: '#10b98115', padding: '8px', borderRadius: '8px' }}>
-                      <FileText size={16} />
+                <td>
+                  <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+                    <button onClick={() => navigate(`/statement/teacher/${teacher._id}`)} title={t('teachers.actions.statement')} style={{ color: 'var(--success)', background: 'rgba(16, 185, 129, 0.1)', padding: '10px', borderRadius: '10px' }}>
+                      <FileText size={18} />
                     </button>
                     <button 
                       onClick={() => handleEdit(teacher)}
-                      style={{ color: 'var(--primary)', background: 'var(--primary)15', padding: '8px', borderRadius: '8px' }}
+                      style={{ color: 'var(--secondary)', background: 'rgba(99, 102, 241, 0.1)', padding: '10px', borderRadius: '10px' }}
                     >
-                      <Edit2 size={16} />
+                      <Edit2 size={18} />
                     </button>
                     <button 
                       onClick={() => handleDeleteTeacher(teacher._id)}
-                      style={{ color: 'var(--accent)', background: 'var(--accent)15', padding: '8px', borderRadius: '8px' }}
+                      style={{ color: 'var(--error)', background: 'rgba(239, 68, 68, 0.1)', padding: '10px', borderRadius: '10px' }}
                     >
-                      <Trash2 size={16} />
+                      <Trash2 size={18} />
                     </button>
                   </div>
                 </td>
@@ -217,10 +237,10 @@ const Teachers = () => {
         onClose={() => setIsModalOpen(false)} 
         title={editingId ? t('teachers.modal.editTitle') : t('teachers.modal.addTitle')}
       >
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('teachers.modal.labels.fullName')}</label>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '10px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('teachers.modal.labels.fullName')}</label>
               <input 
                 type="text" 
                 required 
@@ -229,8 +249,8 @@ const Teachers = () => {
                 placeholder={t('teachers.modal.placeholders.name')} 
               />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('teachers.modal.labels.phone')}</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('teachers.modal.labels.phone')}</label>
               <input 
                 type="text" 
                 required 
@@ -241,9 +261,9 @@ const Teachers = () => {
             </div>
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('teachers.modal.labels.email')}</label>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('teachers.modal.labels.email')}</label>
               <input 
                 type="email" 
                 required 
@@ -252,8 +272,8 @@ const Teachers = () => {
                 placeholder={t('teachers.modal.placeholders.email')} 
               />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('teachers.modal.labels.password')}</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('teachers.modal.labels.password')}</label>
               <input 
                 type="password" 
                 required={!editingId}
@@ -264,9 +284,9 @@ const Teachers = () => {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('teachers.modal.labels.salary')}</label>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('teachers.modal.labels.salary')}</label>
               <input 
                 type="number" 
                 value={formData.salary}
@@ -274,8 +294,8 @@ const Teachers = () => {
                 placeholder={t('teachers.modal.placeholders.salary')} 
               />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('teachers.modal.labels.commission')}</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('teachers.modal.labels.commission')}</label>
               <input 
                 type="number" 
                 value={formData.commissionRate}
@@ -286,46 +306,46 @@ const Teachers = () => {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('teachers.modal.labels.assignedCourses')}</label>
+            <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('teachers.modal.labels.assignedCourses')}</label>
             <div style={{ 
               maxHeight: '180px', 
               overflowY: 'auto', 
               padding: '16px', 
-              background: 'rgba(255, 255, 255, 0.03)', 
+              background: 'var(--glass)', 
               borderRadius: '16px',
-              border: '1px solid var(--glass-border)',
+              border: '1px solid var(--card-border)',
               display: 'flex',
               flexDirection: 'column',
               gap: '12px'
             }}>
               {courses.length === 0 ? (
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textAlign: 'center' }}>{t('teachers.modal.emptyCourses')}</p>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', textAlign: 'center' }}>{t('teachers.modal.emptyCourses')}</p>
               ) : courses.map(course => (
                 <label key={course._id} style={{ 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'space-between',
                   cursor: 'pointer', 
-                  padding: '10px 14px',
+                  padding: '12px 16px',
                   borderRadius: '12px',
-                  background: formData.assignedCourses.includes(course._id) ? 'rgba(99, 102, 241, 0.12)' : 'transparent',
+                  background: formData.assignedCourses.includes(course._id) ? 'rgba(0, 245, 212, 0.05)' : 'transparent',
                   border: '1px solid',
-                  borderColor: formData.assignedCourses.includes(course._id) ? 'rgba(99, 102, 241, 0.2)' : 'transparent',
-                  transition: '0.3s'
+                  borderColor: formData.assignedCourses.includes(course._id) ? 'rgba(0, 245, 212, 0.2)' : 'transparent',
+                  transition: 'var(--transition-smooth)'
                 }}>
-                  <span style={{ fontSize: '0.95rem' }}>{course.name}</span>
+                  <span style={{ fontWeight: '600' }}>{course.name}</span>
                   <input 
                     type="checkbox" 
                     checked={formData.assignedCourses.includes(course._id)}
                     onChange={() => handleCourseToggle(course._id)}
-                    style={{ width: '20px', height: '20px', cursor: 'pointer', accentColor: 'var(--primary)' }}
+                    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
                   />
                 </label>
               ))}
             </div>
           </div>
 
-          <button type="submit" className="primary-btn" style={{ marginTop: '10px', width: '100%', padding: '15px' }}>
+          <button type="submit" className="primary-btn" style={{ height: '56px', width: '100%', fontSize: '1.1rem' }}>
             {editingId ? t('teachers.modal.updateBtn') : t('teachers.modal.saveBtn')}
           </button>
         </form>
@@ -335,4 +355,3 @@ const Teachers = () => {
 };
 
 export default Teachers;
-

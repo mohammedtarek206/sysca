@@ -14,6 +14,12 @@ import Profile from './pages/Profile';
 import Halls from './pages/Halls';
 import Reports from './pages/Reports';
 import Statement from './pages/Statement';
+import Messages from './pages/Messages';
+import Exams from './pages/Exams';
+import Expenses from './pages/Expenses';
+import Library from './pages/Library';
+import Certificates from './pages/Certificates';
+import Schedule from './pages/Schedule';
 
 // Placeholder Pages for future implementation
 const Placeholder = ({ name }) => (
@@ -32,8 +38,15 @@ const ProtectedRoute = ({ children, roles }) => {
     </div>
   );
   
-  if (!user) return <Navigate to="/login" />;
-  if (roles && !roles.includes(user.role)) return <Navigate to={user.role === 'student' ? '/payments' : '/'} />;
+  if (!user || !user.role) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    return <Navigate to="/login" />;
+  }
+  
+  if (roles && !roles.includes(user.role)) {
+    return <Navigate to="/" />;
+  }
   
   return <Layout>{children}</Layout>;
 };
@@ -58,6 +71,12 @@ function App() {
           <Route path="/reports" element={<ProtectedRoute roles={['admin']}><Reports /></ProtectedRoute>} />
           <Route path="/statement/:type/:id" element={<ProtectedRoute roles={['admin', 'instructor', 'student']}><Statement /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute roles={['admin', 'instructor', 'student']}><Profile /></ProtectedRoute>} />
+          <Route path="/messages" element={<ProtectedRoute roles={['admin', 'instructor', 'student']}><Messages /></ProtectedRoute>} />
+          <Route path="/exams" element={<ProtectedRoute roles={['admin', 'instructor', 'student']}><Exams /></ProtectedRoute>} />
+          <Route path="/expenses" element={<ProtectedRoute roles={['admin']}><Expenses /></ProtectedRoute>} />
+          <Route path="/library" element={<ProtectedRoute roles={['admin', 'instructor', 'student']}><Library /></ProtectedRoute>} />
+          <Route path="/certificates" element={<ProtectedRoute roles={['admin', 'instructor', 'student']}><Certificates /></ProtectedRoute>} />
+          <Route path="/schedule" element={<ProtectedRoute roles={['admin', 'instructor', 'student']}><Schedule /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

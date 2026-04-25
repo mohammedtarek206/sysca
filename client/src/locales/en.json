@@ -9,7 +9,157 @@
     "reports": "Financial Reports",
     "attendance": "Attendance",
     "statement": "Statement",
-    "profile": "Profile"
+    "profile": "Profile",
+    "messages": "Messages & Notifications",
+    "exams": "Exams & Results",
+    "expenses": "Academy Expenses",
+    "library": "Learning Library",
+    "certificates": "Certificates & Awards",
+    "schedule": "Timetable",
+    "notifications": {
+      "title": "Notifications",
+      "empty": "No new notifications.",
+      "markRead": "Mark as read",
+      "clearAll": "Clear all"
+    }
+  },
+  "schedule": {
+    "title": "Weekly Timetable",
+    "subtitle": "Course and hall schedules throughout the week",
+    "empty": "No course schedules defined yet."
+  },
+  "certificates": {
+    "title": "Certificates & Awards",
+    "subtitle": "View and download your course completion certificates",
+    "addNew": "Issue New Certificate",
+    "empty": "No certificates issued for you yet.",
+    "view": "View Certificate",
+    "print": "Print Certificate",
+    "template": {
+      "header": "Certificate of Completion",
+      "body": "This is to certify that",
+      "completion": "has successfully completed the training course titled:",
+      "date": "Issue Date:",
+      "id": "Verification ID:",
+      "signature": "Academy Director Signature"
+    },
+    "modal": {
+      "title": "Issue New Certificate",
+      "labels": {
+        "student": "Select Student",
+        "course": "Course",
+        "grade": "Grade (Optional)"
+      }
+    }
+  },
+  "library": {
+    "title": "Learning Library",
+    "subtitle": "Books, videos, and educational resources for courses",
+    "addNew": "Add New Resource",
+    "empty": "No files in the library currently.",
+    "types": {
+      "pdf": "PDF File",
+      "video": "Video Lesson",
+      "link": "External Link",
+      "other": "Other"
+    },
+    "modal": {
+      "title": "Add Educational Material",
+      "labels": {
+        "title": "File/Topic Title",
+        "type": "Content Type",
+        "url": "URL (Google Drive, YouTube, etc.)",
+        "course": "Related Course",
+        "description": "Short Description"
+      }
+    }
+  },
+  "exams": {
+    "title": "Exams System",
+    "subtitle": "Manage tests and track student performance",
+    "addNew": "Create New Exam",
+    "empty": "No exams recorded yet.",
+    "table": {
+      "title": "Exam Title",
+      "course": "Course",
+      "date": "Date",
+      "maxScore": "Max Score",
+      "actions": "Actions"
+    },
+    "results": {
+      "title": "Grading - {{exam}}",
+      "student": "Student",
+      "score": "Score",
+      "note": "Notes",
+      "saveBtn": "Save Final Grades"
+    },
+    "modal": {
+      "title": "Create New Exam",
+      "labels": {
+        "title": "Exam Title",
+        "course": "Course",
+        "date": "Date",
+        "maxScore": "Max Score"
+      }
+    }
+  },
+  "expenses": {
+    "title": "Expenses Management",
+    "subtitle": "Record academy operational costs",
+    "addNew": "Add New Expense",
+    "empty": "No expenses recorded.",
+    "table": {
+      "title": "Description",
+      "amount": "Amount",
+      "category": "Category",
+      "date": "Date"
+    },
+    "categories": {
+      "rent": "Rent",
+      "electricity": "Electricity",
+      "water": "Water",
+      "salary": "Extra Salaries",
+      "marketing": "Marketing",
+      "maintenance": "Maintenance",
+      "other": "Other"
+    }
+  },
+  "messages": {
+    "title": "Messages & Notifications",
+    "subtitle": "Manage communication with students and instructors",
+    "addNew": "Send New Message",
+    "empty": "No messages currently.",
+    "table": {
+      "title": "Title",
+      "target": "Target Audience",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "targets": {
+      "all": "Everyone",
+      "student": "Students Only",
+      "instructor": "Instructors Only",
+      "single_student": "Specific Student"
+    },
+    "modal": {
+      "title": "Send New Message",
+      "labels": {
+        "title": "Message Title",
+        "target": "Send To",
+        "recipient": "Choose Student",
+        "content": "Message Content"
+      },
+      "placeholders": {
+        "title": "e.g., Important update about holidays",
+        "chooseRecipient": "Choose recipient student...",
+        "content": "Compose your message here..."
+      },
+      "saveBtn": "Send Message Now"
+    },
+    "view": {
+      "from": "From: Administration",
+      "date": "Date: "
+    }
   },
   "auth": {
     "logout": "Logout",
@@ -179,7 +329,8 @@
         "name": "e.g., Programming Diploma",
         "price": "1500",
         "duration": "e.g., 3 Months",
-        "chooseHall": "Choose a hall..."
+        "chooseHall": "Choose a hall...",
+        "chooseCourse": "Choose course..."
       },
       "hallCapacity": "Capacity {{capacity}}",
       "noInstructors": "No instructors currently registered",

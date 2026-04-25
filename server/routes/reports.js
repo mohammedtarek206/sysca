@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Course = require('../models/Course');
 const Payment = require('../models/Payment');
+const Expense = require('../models/Expense');
 const { auth, authorize } = require('../middleware/auth');
 
 // Get Profit Report (Admin only)
@@ -27,11 +28,16 @@ router.get('/profit', auth, authorize(['admin']), async (req, res) => {
       }
     }
 
+    // Get Academy Expenses
+    const academyExpenses = await Expense.find();
+    const totalAcademyExpenses = academyExpenses.reduce((sum, e) => sum + e.amount, 0);
+
     res.json({
       totalIncome,
       totalSalaries,
       totalCommissions,
-      netProfit: totalIncome - (totalSalaries + totalCommissions)
+      totalAcademyExpenses,
+      netProfit: totalIncome - (totalSalaries + totalCommissions + totalAcademyExpenses)
     });
   } catch (err) {
     res.status(500).json({ message: err.message });

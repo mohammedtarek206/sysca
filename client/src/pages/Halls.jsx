@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
-import { Home, Plus, Search, Edit2, Trash2, Users } from 'lucide-react';
+import { Home, Plus, Search, Edit2, Trash2, Users, MapPin, AlignLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Modal from '../components/Modal';
 
@@ -47,7 +47,7 @@ const Halls = () => {
     e.preventDefault();
     try {
       if (editingId) {
-        await api.put(`/api/halls/${editingId}`, formData);
+        await api.put(`/halls/${editingId}`, formData);
       } else {
         await api.post('/halls', formData);
       }
@@ -64,7 +64,7 @@ const Halls = () => {
   const handleDelete = async (id) => {
     if (window.confirm(t('halls.alerts.confirmDelete'))) {
       try {
-        await api.delete(`/api/halls/${id}`);
+        await api.delete(`/halls/${id}`);
         fetchHalls();
       } catch (err) {
         alert('Error deleting hall');
@@ -78,52 +78,79 @@ const Halls = () => {
 
   return (
     <div className="animate-fade-in">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px', flexWrap: 'wrap', gap: '20px' }}>
         <div>
-          <h1 style={{ fontSize: '2rem', marginBottom: '8px' }}>{t('halls.title')}</h1>
-          <p style={{ color: 'var(--text-muted)' }}>{t('halls.subtitle')}</p>
+          <h1 style={{ fontSize: '2.4rem', fontWeight: '800', marginBottom: '12px' }}>{t('halls.title')}</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>{t('halls.subtitle')}</p>
         </div>
-        <button className="primary-btn" onClick={() => { setEditingId(null); setFormData({ name: '', capacity: '', description: '' }); setIsModalOpen(true); }}>
+        <button className="primary-btn" style={{ padding: '14px 28px' }} onClick={() => { setEditingId(null); setFormData({ name: '', capacity: '', description: '' }); setIsModalOpen(true); }}>
           <Plus size={20} />
           {t('halls.addNew')}
         </button>
       </div>
 
-      <div style={{ position: 'relative', marginBottom: '24px' }}>
-        <Search size={18} style={{ position: 'absolute', right: isRTL ? '16px' : 'auto', left: isRTL ? 'auto' : '16px', top: '15px', color: 'var(--text-muted)' }} />
-        <input
-          type="text"
+      <div style={{ position: 'relative', marginBottom: '32px', maxWidth: '500px' }}>
+        <Search size={18} style={{ 
+          position: 'absolute', 
+          right: isRTL ? '16px' : 'auto', 
+          left: isRTL ? 'auto' : '16px', 
+          top: '50%', 
+          transform: 'translateY(-50%)',
+          color: 'var(--text-dim)' 
+        }} />
+        <input 
+          type="text" 
           placeholder={t('halls.searchPlaceholder')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ width: '100%', maxWidth: '400px', paddingRight: isRTL ? '45px' : '16px', paddingLeft: isRTL ? '16px' : '45px' }}
+          style={{ 
+            paddingRight: isRTL ? '48px' : '16px', 
+            paddingLeft: isRTL ? '16px' : '48px',
+            height: '52px'
+          }}
         />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '32px' }}>
         {loading ? (
-          <p>{t('common.loading')}</p>
+          <p style={{ textAlign: 'center', gridColumn: '1/-1', color: 'var(--text-dim)', padding: '60px' }}>{t('common.loading')}...</p>
         ) : filteredHalls.length === 0 ? (
-          <p style={{ color: 'var(--text-muted)' }}>{t('halls.empty')}</p>
+          <p style={{ textAlign: 'center', gridColumn: '1/-1', color: 'var(--text-dim)', padding: '60px' }}>{t('halls.empty')}</p>
         ) : filteredHalls.map(hall => (
-          <div key={hall._id} className="glass-card" style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
-              <div style={{ background: 'rgba(99, 102, 241, 0.1)', color: 'var(--primary)', padding: '10px', borderRadius: '12px' }}>
-                <Home size={24} />
+          <div key={hall._id} className="glass-card" style={{ padding: '32px', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
+              <div style={{ 
+                width: '56px', 
+                height: '56px', 
+                background: 'var(--primary-glow)', 
+                color: 'var(--primary)', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                borderRadius: '16px',
+                border: '1px solid var(--primary-dark)'
+              }}>
+                <MapPin size={28} />
               </div>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button onClick={() => handleEdit(hall)} style={{ color: 'var(--text-muted)', background: 'rgba(255,255,255,0.05)', padding: '6px', borderRadius: '8px' }}><Edit2 size={16} /></button>
-                <button onClick={() => handleDelete(hall._id)} style={{ color: 'var(--accent)', background: 'rgba(244, 63, 94, 0.1)', padding: '6px', borderRadius: '8px' }}><Trash2 size={16} /></button>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button onClick={() => handleEdit(hall)} style={{ color: 'var(--text-dim)', background: 'rgba(255,255,255,0.05)', padding: '8px', borderRadius: '10px' }}><Edit2 size={16} /></button>
+                <button onClick={() => handleDelete(hall._id)} style={{ color: 'var(--error)', background: 'rgba(239, 68, 68, 0.1)', padding: '8px', borderRadius: '10px' }}><Trash2 size={16} /></button>
               </div>
             </div>
-            <h3 style={{ fontSize: '1.4rem', marginBottom: '10px', color: 'var(--primary)' }}>{hall.name}</h3>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-main)', marginBottom: '15px', background: 'rgba(255,255,255,0.03)', padding: '8px 12px', borderRadius: '10px', width: 'fit-content' }}>
-              <Users size={16} color="var(--primary)" />
-              <span style={{ fontSize: '0.9rem', fontWeight: '500' }}>{t('halls.card.capacity', { capacity: hall.capacity })}</span>
+            
+            <h3 style={{ fontSize: '1.6rem', fontWeight: '800', marginBottom: '16px' }}>{hall.name}</h3>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--primary)', marginBottom: '24px', background: 'rgba(0, 245, 212, 0.05)', padding: '10px 16px', borderRadius: '12px', width: 'fit-content' }}>
+              <Users size={18} />
+              <span style={{ fontWeight: '700' }}>{t('halls.card.capacity', { capacity: hall.capacity })}</span>
             </div>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>
-              {hall.description || t('halls.card.noDescription')}
-            </p>
+            
+            <div style={{ display: 'flex', gap: '12px', color: 'var(--text-muted)', lineHeight: '1.6', flex: 1 }}>
+              <AlignLeft size={18} style={{ marginTop: '4px', flexShrink: 0 }} />
+              <p style={{ fontSize: '0.95rem' }}>
+                {hall.description || t('halls.card.noDescription')}
+              </p>
+            </div>
           </div>
         ))}
       </div>
@@ -133,9 +160,9 @@ const Halls = () => {
         onClose={() => setIsModalOpen(false)}
         title={editingId ? t('halls.modal.editTitle') : t('halls.modal.addTitle')}
       >
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('halls.modal.labels.name')}</label>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '10px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('halls.modal.labels.name')}</label>
             <input
               type="text"
               required
@@ -144,8 +171,8 @@ const Halls = () => {
               placeholder={t('halls.modal.placeholders.name')}
             />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('halls.modal.labels.capacity')}</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('halls.modal.labels.capacity')}</label>
             <input
               type="number"
               required
@@ -154,16 +181,16 @@ const Halls = () => {
               placeholder={t('halls.modal.placeholders.capacity')}
             />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <label style={{ fontWeight: '600', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('halls.modal.labels.description')}</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('halls.modal.labels.description')}</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder={t('halls.modal.placeholders.description')}
-              style={{ minHeight: '120px' }}
+              style={{ minHeight: '140px', padding: '16px' }}
             />
           </div>
-          <button type="submit" className="primary-btn" style={{ marginTop: '10px', width: '100%', padding: '15px' }}>
+          <button type="submit" className="primary-btn" style={{ height: '56px', marginTop: '12px', width: '100%', fontSize: '1.1rem' }}>
             {editingId ? t('halls.modal.updateBtn') : t('halls.modal.saveBtn')}
           </button>
         </form>
@@ -173,4 +200,5 @@ const Halls = () => {
 };
 
 export default Halls;
+
 

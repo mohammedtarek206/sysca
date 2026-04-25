@@ -60,6 +60,12 @@ app.use('/api/attendance', require('./routes/attendance'));
 app.use('/api/stats', require('./routes/stats'));
 app.use('/api/halls', require('./routes/halls'));
 app.use('/api/reports', require('./routes/reports'));
+app.use('/api/messages', require('./routes/messages'));
+app.use('/api/exams', require('./routes/exams'));
+app.use('/api/expenses', require('./routes/expenses'));
+app.use('/api/materials', require('./routes/materials'));
+app.use('/api/certificates', require('./routes/certificates'));
+app.use('/api/notifications', require('./routes/notifications'));
 
 // Root route for health check
 app.get('/api/health', (req, res) => {

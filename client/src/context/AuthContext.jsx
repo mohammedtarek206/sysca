@@ -11,10 +11,15 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       // Decode token or verify with backend
-      const storedUser = JSON.parse(localStorage.getItem('user'));
-      if (storedUser) {
-        setUser(storedUser);
-        // token is applied via api.js interceptor
+      try {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser) {
+          setUser(storedUser);
+        }
+      } catch (e) {
+        console.error("Failed to parse user from localStorage", e);
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
       }
     }
     setLoading(false);
