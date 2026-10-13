@@ -68,7 +68,7 @@ const Students = () => {
       if (editingStudent) {
         await api.put(`/users/${editingStudent._id}`, formData);
       } else {
-        await api.post('/users/register', { ...formData, role: 'student' });
+        await api.post('/users', { ...formData, role: 'student' });
       }
       setIsModalOpen(false);
       setEditingStudent(null);
@@ -97,9 +97,9 @@ const Students = () => {
   };
 
   const handleEnrollToggle = (courseId) => {
-    setEnrolledCourses(prev => 
-      prev.includes(courseId) 
-        ? prev.filter(id => id !== courseId) 
+    setEnrolledCourses(prev =>
+      prev.includes(courseId)
+        ? prev.filter(id => id !== courseId)
         : [...prev, courseId]
     );
   };
@@ -127,64 +127,64 @@ const Students = () => {
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${selectedStudentForCard._id}`;
     return (
       <div className="animate-fade-in no-print" style={{ padding: '20px' }}>
-         <button onClick={() => setSelectedStudentForCard(null)} style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', marginBottom: '32px', background: 'none', border: 'none', cursor: 'pointer' }}>
-            <X size={20} /> {t('common.close')}
-         </button>
+        <button onClick={() => setSelectedStudentForCard(null)} style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', marginBottom: '32px', background: 'none', border: 'none', cursor: 'pointer' }}>
+          <X size={20} /> {t('common.close')}
+        </button>
 
-         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
-            <button className="primary-btn" onClick={handlePrintCard}>
-               <Printer size={18} /> {t('common.print')}
-            </button>
-         </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
+          <button className="primary-btn" onClick={handlePrintCard}>
+            <Printer size={18} /> {t('common.print')}
+          </button>
+        </div>
 
-         {/* ID Card Template */}
-         <div className="id-card" style={{
-            width: '400px',
-            height: '250px',
-            margin: '0 auto',
-            background: 'linear-gradient(135deg, #050508 0%, #12121a 100%)',
-            borderRadius: '20px',
-            border: '2px solid var(--primary)',
-            padding: '24px',
-            color: 'white',
-            position: 'relative',
-            display: 'flex',
-            gap: '20px',
-            direction: isRTL ? 'rtl' : 'ltr',
-            fontFamily: 'Cairo, sans-serif',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
-            overflow: 'hidden'
-         }}>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-               <div>
-                  <h2 style={{ fontSize: '1.2rem', color: 'var(--primary)', fontWeight: '800', marginBottom: '5px' }}>{isRTL ? 'بطاقة طالب' : 'Student ID'}</h2>
-                  <div style={{ width: '40px', height: '2px', background: 'var(--primary)', marginBottom: '20px' }}></div>
-               </div>
-               
-               <div>
-                  <p style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '4px' }}>{selectedStudentForCard.name}</p>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{selectedStudentForCard.phone}</p>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--primary)', marginTop: '8px' }}>#{selectedStudentForCard._id.slice(-8).toUpperCase()}</p>
-               </div>
-
-               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <ShieldCheck size={14} color="var(--primary)" />
-                  <span style={{ fontSize: '0.7rem', opacity: 0.8 }}>{isRTL ? 'أكاديميتي - نظام آمن' : 'Academiti - Secure System'}</span>
-               </div>
+        {/* ID Card Template */}
+        <div className="id-card" style={{
+          width: '400px',
+          height: '250px',
+          margin: '0 auto',
+          background: 'linear-gradient(135deg, #050508 0%, #12121a 100%)',
+          borderRadius: '20px',
+          border: '2px solid var(--primary)',
+          padding: '24px',
+          color: 'white',
+          position: 'relative',
+          display: 'flex',
+          gap: '20px',
+          direction: isRTL ? 'rtl' : 'ltr',
+          fontFamily: 'Cairo, sans-serif',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+          overflow: 'hidden'
+        }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <h2 style={{ fontSize: '1.2rem', color: 'var(--primary)', fontWeight: '800', marginBottom: '5px' }}>{isRTL ? 'بطاقة طالب' : 'Student ID'}</h2>
+              <div style={{ width: '40px', height: '2px', background: 'var(--primary)', marginBottom: '20px' }}></div>
             </div>
 
-            <div style={{ width: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '15px' }}>
-               <div style={{ background: 'white', padding: '10px', borderRadius: '12px' }}>
-                  <img src={qrUrl} alt="QR Code" style={{ width: '100px', height: '100px' }} />
-               </div>
-               <span style={{ fontSize: '0.6rem', color: 'var(--text-dim)', textAlign: 'center' }}>Scan to Verify</span>
+            <div>
+              <p style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '4px' }}>{selectedStudentForCard.name}</p>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{selectedStudentForCard.phone}</p>
+              <p style={{ fontSize: '0.7rem', color: 'var(--primary)', marginTop: '8px' }}>#{selectedStudentForCard._id.slice(-8).toUpperCase()}</p>
             </div>
 
-            {/* Background Decoration */}
-            <div style={{ position: 'absolute', bottom: '-20px', right: '-20px', width: '100px', height: '100px', background: 'var(--primary-glow)', borderRadius: '50%', filter: 'blur(30px)', opacity: 0.3 }}></div>
-         </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <ShieldCheck size={14} color="var(--primary)" />
+              <span style={{ fontSize: '0.7rem', opacity: 0.8 }}>{isRTL ? 'أكاديميتي - نظام آمن' : 'Academiti - Secure System'}</span>
+            </div>
+          </div>
 
-         <style>{`
+          <div style={{ width: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '15px' }}>
+            <div style={{ background: 'white', padding: '10px', borderRadius: '12px' }}>
+              <img src={qrUrl} alt="QR Code" style={{ width: '100px', height: '100px' }} />
+            </div>
+            <span style={{ fontSize: '0.6rem', color: 'var(--text-dim)', textAlign: 'center' }}>Scan to Verify</span>
+          </div>
+
+          {/* Background Decoration */}
+          <div style={{ position: 'absolute', bottom: '-20px', right: '-20px', width: '100px', height: '100px', background: 'var(--primary-glow)', borderRadius: '50%', filter: 'blur(30px)', opacity: 0.3 }}></div>
+        </div>
+
+        <style>{`
             @media print {
                body * { visibility: hidden; }
                .id-card, .id-card * { visibility: visible; }
@@ -200,7 +200,7 @@ const Students = () => {
     <div className="animate-fade-in">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <h1 style={{ fontSize: '2rem', fontWeight: '800' }}>{t('students.title')}</h1>
-        <button className="primary-btn" onClick={() => { setEditingStudent(null); setFormData({name:'', email:'', phone:'', password:''}); setIsModalOpen(true); }}>
+        <button className="primary-btn" onClick={() => { setEditingStudent(null); setFormData({ name: '', email: '', phone: '', password: '' }); setIsModalOpen(true); }}>
           <UserPlus size={18} />
           {t('students.addNew')}
         </button>
@@ -278,24 +278,24 @@ const Students = () => {
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
             <label>{t('students.modal.labels.fullName')}</label>
-            <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder={t('students.modal.placeholders.name')} />
+            <input type="text" required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder={t('students.modal.placeholders.name')} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
             <div>
               <label>{t('students.modal.labels.email')}</label>
-              <input type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder={t('students.modal.placeholders.email')} />
+              <input type="email" required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder={t('students.modal.placeholders.email')} />
             </div>
             <div>
               <label>{t('students.modal.labels.phone')}</label>
-              <input type="text" required value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} placeholder={t('students.modal.placeholders.phone')} />
+              <input type="text" required value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} placeholder={t('students.modal.placeholders.phone')} />
             </div>
           </div>
           <div>
             <label>{t('students.modal.labels.password')}</label>
-            <input type="password" required={!editingStudent} value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} placeholder={t('students.modal.placeholders.password')} />
+            <input type="password" required={!editingStudent} value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })} placeholder={t('students.modal.placeholders.password')} />
           </div>
           <button type="submit" className="primary-btn" style={{ width: '100%', marginTop: '10px' }}>
-             {editingStudent ? t('students.modal.updateBtn') : t('students.modal.saveBtn')}
+            {editingStudent ? t('students.modal.updateBtn') : t('students.modal.saveBtn')}
           </button>
         </form>
       </Modal>
@@ -305,21 +305,21 @@ const Students = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           <div style={{ maxHeight: '300px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px', padding: '10px' }}>
             {courses.map(course => (
-              <label key={course._id} style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'space-between', 
-                padding: '12px 16px', 
-                background: 'var(--glass)', 
+              <label key={course._id} style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '12px 16px',
+                background: 'var(--glass)',
                 borderRadius: '12px',
                 border: '1px solid',
                 borderColor: enrolledCourses.includes(course._id) ? 'var(--primary)' : 'var(--card-border)',
                 cursor: 'pointer'
               }}>
                 <span style={{ fontWeight: '600' }}>{course.name}</span>
-                <input 
-                  type="checkbox" 
-                  checked={enrolledCourses.includes(course._id)} 
+                <input
+                  type="checkbox"
+                  checked={enrolledCourses.includes(course._id)}
                   onChange={() => handleEnrollToggle(course._id)}
                   style={{ width: '20px', height: '20px', cursor: 'pointer' }}
                 />

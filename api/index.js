@@ -29,11 +29,11 @@ const connectDB = async (req, res, next) => {
     if (mongoose.connection.readyState >= 1) {
       return next();
     }
-    
+
     if (!cachedConn) {
       cachedConn = mongoose.connect(MONGO_URI);
     }
-    
+
     await cachedConn;
     next();
   } catch (err) {
@@ -53,6 +53,12 @@ app.use('/api/attendance', require('../server/routes/attendance'));
 app.use('/api/stats', require('../server/routes/stats'));
 app.use('/api/halls', require('../server/routes/halls'));
 app.use('/api/reports', require('../server/routes/reports'));
+app.use('/api/messages', require('../server/routes/messages'));
+app.use('/api/exams', require('../server/routes/exams'));
+app.use('/api/expenses', require('../server/routes/expenses'));
+app.use('/api/materials', require('../server/routes/materials'));
+app.use('/api/certificates', require('../server/routes/certificates'));
+app.use('/api/notifications', require('../server/routes/notifications'));
 
 // Root route for health check
 app.get('/api/health', (req, res) => {
@@ -73,7 +79,7 @@ app.get('/api/init-db', async (req, res) => {
   try {
     const User = require('../server/models/User');
     const email = 'admin@academy.com';
-    
+
     let admin = await User.findOne({ email });
     if (admin) {
       return res.json({ message: 'Admin user already exists.' });
@@ -86,7 +92,7 @@ app.get('/api/init-db', async (req, res) => {
       password: 'admin123',
       role: 'admin'
     });
-    
+
     await admin.save();
     res.json({ message: 'Admin user created successfully!', email: admin.email });
   } catch (err) {
@@ -117,11 +123,11 @@ app.post('/api/auth/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user._id, role: user.role }, 
-      process.env.JWT_SECRET || 'secret', 
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET || 'secret',
       { expiresIn: '1d' }
     );
-    
+
     res.json({ token, user: { id: user._id, name: user.name, role: user.role } });
   } catch (err) {
     res.status(500).send(`CRITICAL_LOGIN_ERROR: ${err.message}`);
