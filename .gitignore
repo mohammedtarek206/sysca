@@ -9,6 +9,8 @@ server/.env
 client/.env
 
 # Build Output
+dist/
+public/
 client/dist/
 client/build/
 
