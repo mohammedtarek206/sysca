@@ -45,23 +45,38 @@ const connectDB = async (req, res, next) => {
 app.use(connectDB);
 
 // Routes
-app.use('/api/auth', require('../server/routes/auth'));
-app.use('/api/users', require('../server/routes/users'));
-app.use('/api/courses', require('../server/routes/courses'));
-app.use('/api/payments', require('../server/routes/payments'));
-app.use('/api/attendance', require('../server/routes/attendance'));
-app.use('/api/stats', require('../server/routes/stats'));
-app.use('/api/halls', require('../server/routes/halls'));
-app.use('/api/reports', require('../server/routes/reports'));
-app.use('/api/messages', require('../server/routes/messages'));
-app.use('/api/exams', require('../server/routes/exams'));
-app.use('/api/expenses', require('../server/routes/expenses'));
-app.use('/api/materials', require('../server/routes/materials'));
-app.use('/api/certificates', require('../server/routes/certificates'));
-app.use('/api/notifications', require('../server/routes/notifications'));
+const authRouter = require('../server/routes/auth');
+const usersRouter = require('../server/routes/users');
+const coursesRouter = require('../server/routes/courses');
+const paymentsRouter = require('../server/routes/payments');
+const attendanceRouter = require('../server/routes/attendance');
+const statsRouter = require('../server/routes/stats');
+const hallsRouter = require('../server/routes/halls');
+const reportsRouter = require('../server/routes/reports');
+const messagesRouter = require('../server/routes/messages');
+const examsRouter = require('../server/routes/exams');
+const expensesRouter = require('../server/routes/expenses');
+const materialsRouter = require('../server/routes/materials');
+const certificatesRouter = require('../server/routes/certificates');
+const notificationsRouter = require('../server/routes/notifications');
+
+app.use(['/api/auth', '/auth'], authRouter);
+app.use(['/api/users', '/users'], usersRouter);
+app.use(['/api/courses', '/courses'], coursesRouter);
+app.use(['/api/payments', '/payments'], paymentsRouter);
+app.use(['/api/attendance', '/attendance'], attendanceRouter);
+app.use(['/api/stats', '/stats'], statsRouter);
+app.use(['/api/halls', '/halls'], hallsRouter);
+app.use(['/api/reports', '/reports'], reportsRouter);
+app.use(['/api/messages', '/messages'], messagesRouter);
+app.use(['/api/exams', '/exams'], examsRouter);
+app.use(['/api/expenses', '/expenses'], expensesRouter);
+app.use(['/api/materials', '/materials'], materialsRouter);
+app.use(['/api/certificates', '/certificates'], certificatesRouter);
+app.use(['/api/notifications', '/notifications'], notificationsRouter);
 
 // Root route for health check
-app.get('/api/health', (req, res) => {
+app.get(['/api/health', '/health'], (req, res) => {
   const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
   res.json({
     status: 'Server is running',
@@ -75,7 +90,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // One-time Database Initialization (Seeding)
-app.get('/api/init-db', async (req, res) => {
+app.get(['/api/init-db', '/init-db'], async (req, res) => {
   try {
     const User = require('../server/models/User');
     const email = 'admin@academy.com';
@@ -101,7 +116,7 @@ app.get('/api/init-db', async (req, res) => {
 });
 
 // Isolated Login Route for Debugging
-app.post('/api/auth/login', async (req, res) => {
+app.post(['/api/auth/login', '/auth/login'], async (req, res) => {
   const bcrypt = require('bcryptjs');
   const jwt = require('jsonwebtoken');
   const User = require('../server/models/User');
